@@ -28,18 +28,26 @@
   <script>
     $('#slides').superslides({play: 7500, pagination: false})
     var container = $('.slides-container');
-    var playVideo = function (e, transition){
+    var playVideo = function(e, transition) {
       var slide = container.children(':eq(' + transition.upcoming_slide + ')')[0];
       if (slide.tagName.toLowerCase() == 'video') {
         slide.play();
       }
     }
-    var playVideoFirst = function (e){ 
+    var onAnimating = function(e, transition) {
+      // Instead of looping, tell the back end that this slideshow is over
+      if (transition.upcoming_slide == 0) {
+        GrowingPanes.done();
+        return false;
+      }
+      playVideo(e, transition);
+    }
+    var playVideoFirst = function(e) {
       playVideo(e, {upcoming_slide: 0});
     }
 
-    $('#slides').on('animating.slides', playVideo)
-    $('#slides').on('init.slides', playVideoFirst)
+    $('#slides').on('animating.slides', onAnimating);
+    $('#slides').on('init.slides', playVideoFirst);
 
 
   </script>

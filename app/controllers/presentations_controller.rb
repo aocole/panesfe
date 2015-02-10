@@ -12,6 +12,14 @@ class PresentationsController < ApplicationController
   def show
   end
 
+  # TODO: this could be improved to better "randomize" the selection by 
+  # taking recently-played information in to account.
+  def next
+    offset = rand(Presentation.count)
+    presentation = Presentation.offset(offset).select([:id]).first
+    redirect_to display_presentation_url(presentation)
+  end
+
   def push
     push_url = display_presentation_url(@presentation).sub('//', '/')
     logger.debug "Sending #{push_url.inspect}"
@@ -23,7 +31,7 @@ class PresentationsController < ApplicationController
   end
 
   # TODO: secure this
-  skip_before_filter :require_user, only: :display
+  skip_before_filter :require_user, only: [:display, :next]
   # GET /presentations/1/display
   def display
     render html: @presentation.content.html_safe

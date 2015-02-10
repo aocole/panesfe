@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :users
   resources :presentations do
     get 'display', on: :member
+    get 'next', on: :collection
     get 'push', on: :member
     resources :slides, shallow: true
   end
