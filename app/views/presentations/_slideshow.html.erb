@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/stylesheets/superslides.css">
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="/jquery.min.js"></script>
   <script src="/jquery.animate-enhanced.min.js"></script>
   <script src="/jquery.superslides.min.js"></script>
 </head>
@@ -26,7 +26,6 @@
   </div>
 
   <script>
-    $('#slides').superslides({play: 7500, pagination: false})
     var container = $('.slides-container');
     var playVideo = function(e, transition) {
       var slide = container.children(':eq(' + transition.upcoming_slide + ')')[0];
@@ -35,7 +34,7 @@
       }
     }
     var onAnimating = function(e, transition) {
-      // Instead of looping, tell the back end that this slideshow is over
+      // Tell the system when this slideshow is over.
       if (transition.upcoming_slide == 0) {
         GrowingPanes.done();
         return false;
@@ -46,8 +45,10 @@
       playVideo(e, {upcoming_slide: 0});
     }
 
-    $('#slides').on('animating.slides', onAnimating);
     $('#slides').on('init.slides', playVideoFirst);
+    $('#slides').superslides({play: 7500, pagination: false})
+
+    $('#slides').on('animating.slides', onAnimating);
 
 
   </script>
