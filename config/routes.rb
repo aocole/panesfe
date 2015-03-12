@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :themes
+
   resources :users
   resources :presentations do
     get 'display', on: :member

@@ -34,7 +34,10 @@ class PresentationsController < ApplicationController
   skip_before_filter :require_user, only: [:display, :next]
   # GET /presentations/1/display
   def display
-    render html: @presentation.content.html_safe
+    respond_to do |format|
+      format.html { render html: @presentation.theme.content.html_safe }
+      format.json { render json: @presentation.slides }
+    end
   end
 
   # GET /presentations/new
@@ -97,6 +100,6 @@ class PresentationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def presentation_params
-      params.require(:presentation).permit(:name, :published, slides_attributes: [:id, :image, :_destroy])
+      params.require(:presentation).permit(:name, :published, :theme_id, slides_attributes: [:id, :image, :_destroy])
     end
 end
