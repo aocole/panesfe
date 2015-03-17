@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150214010630) do
+ActiveRecord::Schema.define(version: 20150316205637) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -66,9 +66,9 @@ ActiveRecord::Schema.define(version: 20150214010630) do
     t.string   "family_name"
     t.string   "uid"
     t.string   "provider"
-    t.string   "role"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "role",        default: 0, null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -1,4 +1,10 @@
 class User < ActiveRecord::Base
+  enum role: {
+    user: 0, 
+    admin: 100, 
+    superuser: 200
+  }
+
   def self.find_or_create_with_omniauth(auth)
     find_by(uid: auth["uid"], provider: auth["provider"]) ||
     create!(
@@ -7,7 +13,7 @@ class User < ActiveRecord::Base
       given_name: auth["info"]["given_name"] || auth["info"]["first_name"],
       family_name:auth["info"]["family_name"] || auth["info"]["last_name"],
       email:      auth["info"]["email"],
-      role:       "user"
+      role:       User.roles["user"]
     )
   end
 

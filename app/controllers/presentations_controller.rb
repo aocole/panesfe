@@ -4,7 +4,7 @@ class PresentationsController < ApplicationController
   # GET /presentations
   # GET /presentations.json
   def index
-    @presentations = Presentation.all
+    @presentations = policy_scope(Presentation)
   end
 
   # GET /presentations/1
@@ -95,7 +95,7 @@ class PresentationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_presentation
-      @presentation = Presentation.find(params[:id])
+      @presentation = policy_scope(Presentation).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

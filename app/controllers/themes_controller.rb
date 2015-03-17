@@ -4,7 +4,7 @@ class ThemesController < ApplicationController
   # GET /themes
   # GET /themes.json
   def index
-    @themes = Theme.all
+    @themes = policy_scope(Theme)
   end
 
   # GET /themes/1
@@ -19,6 +19,7 @@ class ThemesController < ApplicationController
 
   # GET /themes/1/edit
   def edit
+    authorize @theme
   end
 
   # POST /themes
@@ -65,7 +66,7 @@ class ThemesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_theme
-      @theme = Theme.find(params[:id])
+      @theme = policy_scope(Theme).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

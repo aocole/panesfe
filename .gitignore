@@ -21,3 +21,6 @@ config/secrets.yml
 .env
 
 public/uploads
+
+# Ignore ctags files
+.tag*
