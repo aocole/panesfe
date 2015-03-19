@@ -1,5 +1,9 @@
 class PresentationPolicy < ApplicationPolicy
 
+  def show?
+    record.user == user
+  end
+
 
   class Scope < Scope
   

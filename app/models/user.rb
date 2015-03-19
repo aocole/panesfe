@@ -1,4 +1,9 @@
 class User < ActiveRecord::Base
+  validates :email, presence: true, uniqueness: true
+  validates :uid, presence: true, uniqueness: true
+  validates :provider, presence: true
+  validates :role, presence: true
+
   enum role: {
     user: 0, 
     admin: 100, 
