@@ -11,11 +11,11 @@ class ApplicationPolicy
   end
 
   def show?
-    scope.where(:id => record.id).exists?
+    admin_or_owner
   end
 
   def create?
-    false
+    true
   end
 
   def new?
@@ -23,7 +23,7 @@ class ApplicationPolicy
   end
 
   def update?
-    record.user == user || user.admin? || user.superuser?
+    admin_or_owner
   end
 
   def edit?
@@ -31,7 +31,7 @@ class ApplicationPolicy
   end
 
   def destroy?
-    record.user == user || user.admin? || user.superuser?
+    admin_or_owner
   end
 
   def scope
@@ -50,5 +50,11 @@ class ApplicationPolicy
       scope
     end
   end
-end
 
+  private
+
+  def admin_or_owner
+    record.user == user || user.admin? || user.superuser?
+  end
+
+end

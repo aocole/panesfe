@@ -1,10 +1,5 @@
 class PresentationPolicy < ApplicationPolicy
 
-  def show?
-    record.user == user
-  end
-
-
   class Scope < Scope
   
     def resolve
@@ -16,8 +11,6 @@ class PresentationPolicy < ApplicationPolicy
     end
 
   end
-
-
 
 
 
