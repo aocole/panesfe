@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   get '/auth/:provider/callback', to: 'auth#callback'
   get '/auth', to: 'auth#index', as: 'login'
-  get '/auth/logout', to: 'auth#index', as: 'logout'
+  get '/auth/logout', to: 'auth#logout', as: 'logout'
   get '/presentations', to: 'presentations#index', as: 'logged_in_home'
 
   # The priority is based upon order of creation: first created -> highest priority.

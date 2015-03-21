@@ -9,11 +9,10 @@ class AuthController < ApplicationController
 
   def logout
     clear_current_user
-    redirect_to home_path
+    redirect_to root_path
   end
 
   def index
-    redirect_to('/auth/google_oauth2')
   end
 
   protected
