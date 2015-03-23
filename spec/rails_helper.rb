@@ -49,3 +49,17 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 end
+
+def log_in_as(user)
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.mock_auth[user.provider.intern] = OmniAuth::AuthHash.new({
+    provider: user.provider.to_s,
+    uid: user.uid,
+  })
+  visit "/auth/#{user.provider}"
+end
+
+def not_logged_in
+  OmniAuth.config.test_mode = false
+end
+

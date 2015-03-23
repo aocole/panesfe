@@ -48,10 +48,9 @@
           <a class="navbar-brand" href="<%=current_user ? logged_in_home_path : '/'%>"><%=t 'product_name'%></a>
           <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
-              <li><%= link_to Theme.model_name.human.pluralize, themes_path  %></li>
-<!--               <li><%= link_to "Link1", "/path1"  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li> -->
+              <% if current_user %>
+                <li><%= link_to Theme.model_name.human.pluralize, themes_path  %></li>
+              <% end %>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <% if !current_user %>
