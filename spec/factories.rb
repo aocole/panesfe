@@ -8,6 +8,7 @@ FactoryGirl.define do
 
   factory :theme do
     association :user, strategy: :build
+    name { Faker::Commerce.product_name }
   end
 
   factory :presentation do

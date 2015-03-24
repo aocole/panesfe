@@ -50,6 +50,8 @@ en:
       no_presentations: No presentations yet. <a href="%s">Create one?</a>
       created_flash: Presentation was successfully created. Now add some content.
     auth:
+      not_authorized:
+        You are not authorized to perform this action.
       login_required:
         You must log in to continue. Please select your login method.
       user:

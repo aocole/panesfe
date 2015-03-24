@@ -22,4 +22,9 @@ module CurrentUserHelper
       redirect_to("/auth?origin=#{CGI.escape(request.fullpath)}")
     end
   end
+
+  def user_not_authorized
+    flash[:alert] = t('controllers.auth.not_authorized')
+    redirect_to(logged_in_home_path)
+  end
 end
