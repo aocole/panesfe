@@ -23,8 +23,7 @@ en:
   product_name: Growing Panes
   meta_description: Video Wall Content Mangement System
   marketing_message: 
-    Growing Panes is an open-source video wall system, consisting of a playback component
-    and a content-management component.
+    Growing Panes is an advanced video wall system designed for maximum features and easy management.
   nav:
     about: About
     home: Home
@@ -50,11 +49,9 @@ en:
       no_presentations: No presentations yet. <a href="%s">Create one?</a>
       created_flash: Presentation was successfully created. Now add some content.
     auth:
-      not_authorized:
-        You are not authorized to perform this action.
-      login_required:
-        You must log in to continue. Please select your login method.
-      user:
-        User Sign-in
-      admin:
-        Admin Sign-in
+      not_authorized: You are not authorized to perform this action.
+      login_required: You must log in to continue. Please select your login method.
+      user: User Sign-in
+      admin: Admin Sign-in
+    themes:
+      use_this_theme: Use this theme
