@@ -22,9 +22,6 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
-# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring',        group: :development
-gem 'pry-rails',        group: :development
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -47,17 +44,21 @@ gem "therubyracer"
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem "twitter-bootstrap-rails"
 
-group :development, :test do
-  gem 'dotenv-rails'
+group :test do
   gem 'rspec-rails', '~>3.1'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'capybara'
 end
 
-
-gem 'better_errors', groups: [:development]
-gem 'binding_of_caller', groups: [:development]
+group :development do
+  gem 'dotenv-rails'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring',        group: :development
+  gem 'pry-rails',        group: :development
+end
 
 gem 'delayed_job_active_record'
 gem 'rest-client'
