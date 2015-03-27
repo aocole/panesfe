@@ -1,3 +1,4 @@
+//= require ./tmpl.min.js
 //= require ./load-image.all.min.js
 //= require ./jquery.iframe-transport.js
 //= require ./jquery.fileupload.js
@@ -5,3 +6,4 @@
 //= require ./jquery.fileupload-image.js
 //= require ./jquery.fileupload-video.js
 //= require ./jquery.fileupload-validate.js
+//= require ./jquery.fileupload-ui.js
