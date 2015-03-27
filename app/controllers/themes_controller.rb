@@ -15,6 +15,7 @@ class ThemesController < ApplicationController
   # GET /themes/new
   def new
     @theme = Theme.new
+    authorize @theme
   end
 
   # GET /themes/1/edit

@@ -43,7 +43,11 @@ class PresentationsController < ApplicationController
   # GET /presentations/new
   def new
     @presentation = Presentation.new
+    authorize @presentation
     @presentation.slides.build
+    if params[:theme_id]
+      @presentation.theme = policy_scope(Theme).where(id: params[:theme_id]).first
+    end
   end
 
   # GET /presentations/1/edit
@@ -96,6 +100,7 @@ class PresentationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_presentation
       @presentation = policy_scope(Presentation).find(params[:id])
+      authorize @presentation
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

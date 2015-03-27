@@ -30,15 +30,11 @@ describe "theme usage" do
     end
 
     it "should let you create a presentation with a theme" do
+      yet_another_theme = FactoryGirl.create(:theme, user: other_user)
       visit(themes_path)
-      click_link I18n.t('controllers.themes.use_this_theme')
-      expect(current_path).to eq(new_theme_presentation_path(@other_theme))
-      name = Faker::Commerce.product_name
-      fill_in 'Name', :with => name
-      click_button 'Create Presentation'
-      presentation  = Presentation.last
-      expect(current_path).to eq(edit_presentation_path(presentation))
-      expect(presentation.theme).to eq(@other_theme)
+      page.find('tr', text: yet_another_theme.name).click_link I18n.t('controllers.themes.use_this_theme')
+      expect(current_path).to eq(new_theme_presentation_path(yet_another_theme))
+      expect(find_field('Theme').value).to eq(yet_another_theme.id.to_s)
     end
 
 
