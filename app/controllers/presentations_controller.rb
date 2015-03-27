@@ -46,7 +46,7 @@ class PresentationsController < ApplicationController
     authorize @presentation
     @presentation.slides.build
     if params[:theme_id]
-      @presentation.theme = policy_scope(Theme).where(id: params[:theme_id]).first
+      @presentation.theme = policy_scope(Theme).find_by_id(params[:theme_id])
     end
   end
 
@@ -99,7 +99,7 @@ class PresentationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_presentation
-      @presentation = policy_scope(Presentation).find(params[:id])
+      @presentation = policy_scope(Presentation).find_by_id!(params[:id])
       authorize @presentation
     end
 

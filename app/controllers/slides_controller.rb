@@ -34,12 +34,12 @@ class SlidesController < ApplicationController
   private
 
   def set_presentation_from_param
-    @presentation = policy_scope(Presentation).find(params[:presentation_id])
+    @presentation = policy_scope(Presentation).find_by_id!(params[:presentation_id])
     authorize(@presentation)
   end
 
   def set_presentation_from_slide
-    @slide = policy_scope(Slide).find(params[:id])
+    @slide = policy_scope(Slide).find_by_id!(params[:id])
     @presentation = @slide.presentation
     authorize(@presentation)
   end
