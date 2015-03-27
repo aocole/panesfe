@@ -24,7 +24,10 @@ module CurrentUserHelper
   end
 
   def user_not_authorized
-    flash[:alert] = t('controllers.auth.not_authorized')
+    unless request.xhr?
+      # TODO: more descriptive error?
+      flash[:alert] = t('controllers.auth.not_authorized')
+    end
     redirect_to(logged_in_home_path)
   end
 end

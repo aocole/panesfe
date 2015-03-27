@@ -9,4 +9,9 @@ class Slide < ActiveRecord::Base
   def is_image?
     !is_video?
   end
+
+  def name
+    image.file.filename
+  end
+
 end

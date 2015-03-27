@@ -17,6 +17,7 @@ en:
       new: New
       edit: Edit
       push: Push
+      save: Save
     titles:
       edit: Edit %{model}
       save: Save %{model}

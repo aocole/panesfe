@@ -1,5 +1,9 @@
 <%= form_for @presentation, :html => { :class => "form presentation", :role => 'form' } do |f| %>
 
+  <%= f.submit t('helpers.links.save'), :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            presentations_path, :class => 'btn btn-default' %>
+
     <% if @presentation.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
       <div class="panel-heading">
@@ -38,10 +42,6 @@
   </div>
 
  -->
-  <%= f.submit nil, :class => 'btn btn-primary' %>
-  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-            presentations_path, :class => 'btn btn-default' %>
-
 <% end %>
 
 <%= if @presentation.id then render(partial: 'images_form') end%>

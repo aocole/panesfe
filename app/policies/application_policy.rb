@@ -7,7 +7,7 @@ class ApplicationPolicy
   end
 
   def index?
-    false
+    admin_or_owner
   end
 
   def show?
