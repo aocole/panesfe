@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Presentation do
   describe "initialization" do
     let(:presentation) { Presentation.new }
+    let(:fake_panesd) { instance_double(Panesd) }
 
     it 'creates a new presentation with a minimum set of attributes' do
       expect(presentation.save).to be_falsy

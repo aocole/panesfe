@@ -63,3 +63,8 @@ def not_logged_in
   OmniAuth.config.test_mode = false
 end
 
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/cassettes'
+  c.hook_into :webmock
+  c.configure_rspec_metadata!
+end

@@ -7,11 +7,11 @@ class ApplicationPolicy
   end
 
   def index?
-    admin_or_owner
+    admin_or_owner?
   end
 
   def show?
-    admin_or_owner
+    admin_or_owner?
   end
 
   def create?
@@ -23,7 +23,7 @@ class ApplicationPolicy
   end
 
   def update?
-    admin_or_owner
+    admin_or_owner?
   end
 
   def edit?
@@ -31,7 +31,7 @@ class ApplicationPolicy
   end
 
   def destroy?
-    admin_or_owner
+    admin_or_owner?
   end
 
   def scope
@@ -53,8 +53,8 @@ class ApplicationPolicy
 
   private
 
-  def admin_or_owner
-    record.user == user || user.admin? || user.superuser?
+  def admin_or_owner?
+    record.user == user || user.adminish?
   end
 
 end

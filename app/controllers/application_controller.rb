@@ -9,4 +9,11 @@ class ApplicationController < ActionController::Base
   include CurrentUserHelper
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  def not_found
+    redirect_to not_found_path
+  end
+
+
 end

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get '/auth/logout', to: 'auth#logout', as: 'logout'
   get '/presentations', to: 'presentations#index', as: 'logged_in_home'
   get '/about', to: 'static#about', as: 'logged_out_home'
+  get '/404', to: 'static#not_found', as: 'not_found'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

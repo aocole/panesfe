@@ -21,12 +21,12 @@ class PresentationsController < ApplicationController
   end
 
   def push
-    push_url = display_presentation_url(@presentation).sub('//', '/')
-    logger.debug "Sending #{push_url.inspect}"
-    RestClient.get(
-      'http://localhost:3001/navigate/' + 
-      push_url
-    )
+    begin
+      Panesd.new(display_presentation_url(@presentation)).push
+    rescue Errno::ECONNREFUSED
+      flash[:error] = t('controllers.presentations.panesd_offline')
+    end
+    flash[:notice] = t('controllers.presentations.presentation_pushed')
     redirect_to action: :index
   end
 

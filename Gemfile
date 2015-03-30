@@ -49,6 +49,8 @@ group :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'capybara'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do

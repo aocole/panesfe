@@ -48,6 +48,8 @@ en:
         existing presentation to add, remove, or re-organize content.
       no_presentations: No presentations yet. <a href="%s">Create one?</a>
       created_flash: Presentation was successfully created. Now add some content.
+      panesd_offline: Could not connect to the video wall controller.
+      presentation_pushed: Presentation pushed successfully
     auth:
       not_authorized: You are not authorized to perform this action.
       login_required: You must log in to continue. Please select your login method.
@@ -55,3 +57,6 @@ en:
       admin: Admin Sign-in
     themes:
       use_this_theme: Use this theme
+    static:
+      oops: Oops!
+      not_found: The page you requested could not be found.

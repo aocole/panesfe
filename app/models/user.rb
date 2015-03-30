@@ -10,6 +10,11 @@ class User < ActiveRecord::Base
     superuser: 200
   }
 
+  def adminish?
+    admin? || superuser?
+  end
+
+
   def self.find_or_create_with_omniauth(auth)
     find_by(uid: auth["uid"], provider: auth["provider"]) ||
     create!(
