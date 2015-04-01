@@ -56,7 +56,7 @@ def log_in_as(user)
     provider: user.provider.to_s,
     uid: user.uid,
   })
-  visit "/auth/#{user.provider}"
+  visit user_omniauth_authorize_path(user.provider.intern)
 end
 
 def not_logged_in

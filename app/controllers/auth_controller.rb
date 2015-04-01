@@ -1,19 +1,12 @@
-class AuthController < ApplicationController
-  skip_before_filter :require_user, only: [:index, :callback, :logout]
-  skip_after_filter :verify_authorized, only: [:callback, :logout]
+class AuthController < Devise::OmniauthCallbacksController
+  skip_after_filter :verify_authorized, only: [:google_oauth2]
   skip_after_filter :verify_policy_scoped, only: [:index]
-  def callback
-    raise "Invalid strategy #{params[:provider].inspect}" unless params[:provider]=='google_oauth2'
+  
+  def google_oauth2
     @user = User.find_or_create_with_omniauth(auth_hash)
-    self.current_user = @user
-    redirect_to(logged_in_home_path)
+    sign_in_and_redirect @user, event: :authentication
   end
-
-  def logout
-    clear_current_user
-    redirect_to root_path
-  end
-
+  
   def index
   end
 

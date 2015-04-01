@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  before_action :authenticate_user!
   after_action :verify_authorized, :except => [:index, :show]
   after_action :verify_policy_scoped, :only => [:index, :show]
-  before_filter :require_user
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -15,5 +15,7 @@ class ApplicationController < ActionController::Base
     redirect_to not_found_path
   end
 
-
+  def after_sign_in_path_for(resource)
+    request.env['omniauth.origin'] || stored_location_for(resource) || logged_in_home_path
+  end
 end

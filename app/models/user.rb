@@ -1,4 +1,12 @@
 class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, 
+    :rememberable, 
+    :trackable, 
+    :validatable,
+    :omniauthable,
+    omniauth_providers: [:google_oauth2]
   validates :email, presence: true, uniqueness: true
   validates :uid, presence: true, uniqueness: true
   validates :provider, presence: true
@@ -25,6 +33,15 @@ class User < ActiveRecord::Base
       email:      auth["info"]["email"],
       role:       User.roles["user"]
     )
+  end
+
+  protected
+
+  # we don't want to force passwords on the normal case of 
+  # signing in with google
+  def password_required?
+    return false if provider.to_s == 'google_oauth2'
+    super
   end
 
 end

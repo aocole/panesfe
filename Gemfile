@@ -36,6 +36,7 @@ gem 'unicorn', group: :production
 # gem 'debugger', group: [:development, :test]
 
 # authn/authz stuff
+gem 'devise'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'pundit'

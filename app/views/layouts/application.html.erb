@@ -55,7 +55,7 @@
             <ul class="nav navbar-nav navbar-right">
               <% if !current_user %>
                 <li>
-                  <a href="<%=url_for login_path%>">
+                  <a href="<%=url_for new_user_session_path%>">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     <%=t 'nav.login' %>
                   </a>
@@ -69,7 +69,7 @@
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="#"><%=t 'nav.settings' %></a></li>
                     <li class="divider"></li>
-                    <li><%=link_to t('nav.logout'), logout_path%></li>
+                    <li><%=link_to t('nav.logout'), destroy_user_session_path, method: :delete%></li>
                   </ul>
                 </li>
               <% end -%>

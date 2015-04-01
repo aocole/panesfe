@@ -3,6 +3,7 @@ FactoryGirl.define do
   factory :user do
     uid { Faker::Number.number(10) }
     email { Faker::Internet.email }
+    password { Faker::Internet.password }
     provider 'google_oauth2'
   end
 

@@ -15,15 +15,15 @@ describe "user login and logout" do
     it "logs out a logged-in user" do
       log_in_as(user)
       expect(current_path).to eq(logged_in_home_path)
-      visit(logout_path)
-      expect(current_path).to eq(login_path)
+      click_link(I18n.t('nav.logout'))
+      expect(current_path).to eq(new_user_session_path)
       expect(find(".navbar")).not_to have_content user.email
     end  
 
     it "prevents a non-logged-in user from viewing the presentations index page" do
       not_logged_in
       visit(presentations_path)
-      expect(current_path).to eq(login_path)
+      expect(current_path).to eq(new_user_session_path)
       expect(find(".navbar")).not_to have_content user.email
     end
 
@@ -50,15 +50,15 @@ describe "user login and logout" do
     it "logs out a logged-in user" do
       log_in_as(user)
       expect(current_path).to eq(logged_in_home_path)
-      visit(logout_path)
-      expect(current_path).to eq(login_path)
+      click_link(I18n.t('nav.logout'))
+      expect(current_path).to eq(new_user_session_path)
       expect(find(".navbar")).not_to have_content user.email
     end  
 
     it "prevents a non-logged-in user from viewing the presentations index page" do
       not_logged_in
       visit(presentations_path)
-      expect(current_path).to eq(login_path)
+      expect(current_path).to eq(new_user_session_path)
       expect(find(".navbar")).not_to have_content user.email
     end  
   end
