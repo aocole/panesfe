@@ -16,7 +16,7 @@ describe "user login and logout" do
       log_in_as(user)
       expect(current_path).to eq(logged_in_home_path)
       click_link(I18n.t('nav.logout'))
-      expect(current_path).to eq(new_user_session_path)
+      expect(current_path).to eq(logged_out_home_path)
       expect(find(".navbar")).not_to have_content user.email
     end  
 
@@ -51,7 +51,7 @@ describe "user login and logout" do
       log_in_as(user)
       expect(current_path).to eq(logged_in_home_path)
       click_link(I18n.t('nav.logout'))
-      expect(current_path).to eq(new_user_session_path)
+      expect(current_path).to eq(logged_out_home_path)
       expect(find(".navbar")).not_to have_content user.email
     end  
 

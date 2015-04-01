@@ -28,8 +28,8 @@ en:
     about: About
     home: Home
     contact: Contact
-    login: Login
-    logout: Logout
+    login: Log in
+    logout: Log out
     settings: Settings
   action:
     create: Create
@@ -52,9 +52,10 @@ en:
       presentation_pushed: Presentation pushed successfully
     auth:
       not_authorized: You are not authorized to perform this action.
-      login_required: You must log in to continue. Please select your login method.
-      user: User Sign-in
-      admin: Admin Sign-in
+      login_required: You must log in to continue.
+      user: User Login
+      admin: Password Login
+      google_oauth2_login: Log in with Google
     themes:
       use_this_theme: Use this theme
     static:
