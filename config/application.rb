@@ -21,7 +21,7 @@ module PanesfeRails
     # config.i18n.default_locale = :de
 
     config.to_prepare do
-      Devise::SessionsController.skip_after_action :verify_authorized, :only => [:new, :destroy]
+      Devise::SessionsController.skip_after_action :verify_authorized, :only => [:new, :create, :destroy]
     end
   end
 end
