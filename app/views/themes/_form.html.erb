@@ -1,4 +1,4 @@
-<%= form_for @theme, :html => { :class => "form-horizontal theme" } do |f| %>
+<%= form_for @theme, html: { class: "theme" } do |f| %>
 
     <% if @theme.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
@@ -15,24 +15,28 @@
     </div>
   <% end %>
 
-  <div class="control-group">
-    <%= f.label :name, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :name, :class => 'form-control' %>
-    </div>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, :class => 'form-control' %>
     <%= error_span(@theme[:name]) %>
   </div>
-  <div class="control-group">
-    <%= f.label :content, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_area :content, :class => 'form-control' %>
-    </div>
+
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_field :description, :class => 'form-control' %>
+    <%= error_span(@theme[:description]) %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :content %>
+    <%= f.text_area :content, :class => 'form-control', rows: 15 %>
     <%= error_span(@theme[:content]) %>
   </div>
 
 
-  <%= f.submit nil, :class => 'btn btn-primary' %>
-  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-            themes_path, :class => 'btn btn-default' %>
-
+  <div class="form-group">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+              themes_path, :class => 'btn btn-default' %>
+  </div>
 <% end %>

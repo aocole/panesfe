@@ -37,6 +37,16 @@ describe "theme usage" do
       expect(find_field('Theme').value).to eq(yet_another_theme.id.to_s)
     end
 
+    it "should allow editing a theme" do
+      log_in_as(other_user)
+      visit(edit_theme_path(@other_theme))
+      desc = Faker::Hacker.say_something_smart
+      fill_in('Description', with: desc)
+      click_button('Update Theme')
+      expect(current_path).to eq(theme_path(@other_theme))
+      expect(page).to have_content(desc)
+    end
+
 
   end
 end

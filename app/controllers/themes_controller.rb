@@ -15,12 +15,10 @@ class ThemesController < ApplicationController
   # GET /themes/new
   def new
     @theme = Theme.new
-    authorize @theme
   end
 
   # GET /themes/1/edit
   def edit
-    authorize @theme
   end
 
   # POST /themes
@@ -68,10 +66,11 @@ class ThemesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_theme
       @theme = policy_scope(Theme).find_by_id!(params[:id])
+      authorize @theme
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def theme_params
-      params.require(:theme).permit(:name, :content)
+      params.require(:theme).permit(:name, :content, :description)
     end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331175416) do
+ActiveRecord::Schema.define(version: 20150402195900) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -52,10 +52,11 @@ ActiveRecord::Schema.define(version: 20150331175416) do
 
   create_table "themes", force: true do |t|
     t.string   "name"
-    t.integer  "user_id",    null: false
+    t.integer  "user_id",     null: false
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "description"
   end
 
   add_index "themes", ["user_id"], name: "index_themes_on_user_id"

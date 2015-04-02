@@ -7,7 +7,7 @@
     <tr>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:user_id) %></th>
-      <th><%= model_class.human_attribute_name(:content) %></th>
+      <th><%= model_class.human_attribute_name(:description) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -16,8 +16,8 @@
     <% @themes.each do |theme| %>
       <tr>
         <td><%= link_to theme.name, theme_path(theme) %></td>
-        <td><%= theme.user.given_name %> <%= theme.user.family_name %> </td>
-        <td><pre><%= theme.content.truncate(100) %></pre></td>
+        <td><%= theme.user.email %> </td>
+        <td><%= theme.description %></td>
         <td><%=l theme.created_at %></td>
         <td>
           <%= link_to t('controllers.themes.use_this_theme'), new_theme_presentation_path(theme), :class => 'btn btn-default btn-xs' %>
