@@ -1,4 +1,6 @@
 class PresentationsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:display, :next]
+  before_action :api_auth!, only: [:display, :next]
   before_action :set_presentation, only: [:show, :display, :push, :edit, :update, :destroy]
 
   # GET /presentations
@@ -30,8 +32,6 @@ class PresentationsController < ApplicationController
     redirect_to action: :index
   end
 
-  # TODO: secure this
-  skip_before_filter :require_user, only: [:display, :next]
   # GET /presentations/1/display
   def display
     respond_to do |format|

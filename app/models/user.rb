@@ -22,6 +22,9 @@ class User < ActiveRecord::Base
     admin? || superuser?
   end
 
+  def videowall?
+    false
+  end
 
   def self.find_or_create_with_omniauth(auth)
     find_by(uid: auth["uid"], provider: auth["provider"]) ||

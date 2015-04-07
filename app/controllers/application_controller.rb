@@ -22,4 +22,20 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     logged_out_home_path
   end
+
+  def api_auth!
+    @basic_authed = authenticate_with_http_basic do |user, password|
+      user == Rails.application.secrets.videowall_user && password == Rails.application.secrets.videowall_password
+    end
+    if @basic_authed
+      return true
+    else
+      user_not_authorized
+    end
+  end
+
+  def pundit_user
+    return current_user if current_user
+    @basic_authed ? OpenStruct.new(videowall?: true) : nil
+  end
 end

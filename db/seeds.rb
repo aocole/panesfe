@@ -5,3 +5,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+# Bootstrap admin user
+User.create(
+  email:'admin@example.com',
+  password: 'changeme',
+  provider: 'devise',
+  uid: Devise.friendly_token,
+  role: User.roles[:admin]
+)
