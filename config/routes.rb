@@ -2,9 +2,6 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     omniauth_callbacks: 'auth'
   }
-  resources :themes do
-    resources :presentations, shallow: true
-  end
 
   resources :users
   resources :presentations do
@@ -12,6 +9,10 @@ Rails.application.routes.draw do
     get 'next', on: :collection
     get 'push', on: :member
     resources :slides, shallow: true
+  end
+
+  resources :themes do
+    resources :presentations, shallow: true
   end
 
   get '/presentations', to: 'presentations#index', as: 'logged_in_home'
