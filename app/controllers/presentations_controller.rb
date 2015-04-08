@@ -1,7 +1,7 @@
 class PresentationsController < ApplicationController
+  skip_after_action :verify_authorized, only: [:display, :next]
   skip_before_action :authenticate_user!, only: [:display, :next]
-  before_action :api_auth!, only: [:display, :next]
-  before_action :set_presentation, only: [:show, :display, :push, :edit, :update, :destroy]
+  before_action :set_presentation, only: [:show, :push, :edit, :update, :destroy]
 
   # GET /presentations
   # GET /presentations.json
@@ -34,6 +34,7 @@ class PresentationsController < ApplicationController
 
   # GET /presentations/1/display
   def display
+    @presentation = Presentation.find_by_id!(params[:id])
     respond_to do |format|
       format.html { render html: @presentation.theme.content.html_safe }
       format.json { render json: @presentation.slides }
