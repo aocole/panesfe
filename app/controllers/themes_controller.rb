@@ -15,6 +15,7 @@ class ThemesController < ApplicationController
   # GET /themes/new
   def new
     @theme = Theme.new
+    authorize @theme
   end
 
   # GET /themes/1/edit
@@ -25,6 +26,7 @@ class ThemesController < ApplicationController
   # POST /themes.json
   def create
     @theme = Theme.new(theme_params)
+    authorize @theme
     @theme.user = current_user
 
     respond_to do |format|

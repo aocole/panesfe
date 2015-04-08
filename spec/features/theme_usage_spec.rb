@@ -47,6 +47,17 @@ describe "theme usage" do
       expect(page).to have_content(desc)
     end
 
+    it "should allow creating a theme" do
+      log_in_as(other_user)
+      visit(new_theme_path)
+      desc = Faker::Hacker.say_something_smart
+      fill_in('Description', with: desc)
+      fill_in('Name', with: Faker::Commerce.product_name)
+      click_button('Create Theme')
+      expect(page).to have_content(desc)
+      expect(page).to have_content("success")
+    end
+
 
   end
 end
