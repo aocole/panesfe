@@ -19,6 +19,10 @@ class PresentationsController < ApplicationController
   def next
     offset = rand(Presentation.count)
     presentation = Presentation.offset(offset).select([:id]).first
+    if presentation.nil?
+      redirect_to logged_out_home_path
+      return
+    end
     redirect_to display_presentation_url(presentation)
   end
 
