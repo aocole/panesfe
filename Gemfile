@@ -35,6 +35,9 @@ gem 'unicorn', group: :production
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# for config file
+gem 'inifile', '~>3.0.0'
+
 # authn/authz stuff
 gem 'devise'
 gem 'omniauth'

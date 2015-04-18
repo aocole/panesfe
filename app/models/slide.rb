@@ -1,6 +1,7 @@
 class Slide < ActiveRecord::Base
   mount_uploader :image, ImageUploader
   belongs_to :presentation
+  has_one :user, through: :presentation
 
   def is_video?
     image.content_type == "application/mp4"

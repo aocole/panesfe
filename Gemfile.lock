@@ -91,6 +91,7 @@ GEM
     hashie (3.3.2)
     hike (1.2.3)
     i18n (0.6.11)
+    inifile (3.0.0)
     jbuilder (2.2.5)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
@@ -258,6 +259,7 @@ DEPENDENCIES
   dotenv-rails
   factory_girl_rails
   faker
+  inifile (~> 3.0.0)
   jbuilder (~> 2.0)
   jquery-rails
   jquery-ui-rails

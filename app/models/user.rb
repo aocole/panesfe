@@ -38,6 +38,35 @@ class User < ActiveRecord::Base
     )
   end
 
+  def disk_used_mb
+    return 0 unless upload_eligible?
+    return 0 unless Dir.exist?(upload_dir)
+    # gets usage in kb then calculates mb. User gets 4k credit for dir size
+    (`du -sk "#{upload_dir}"`.split("\t").first.to_i - 4) / 1024.0
+  end
+
+  def disk_available_mb
+    return 0 unless upload_eligible?
+    disk_quota_mb - disk_used_mb
+  end
+
+  def disk_quota_mb
+    custom_disk_quota_mb || GrowingPanes.config['user']['default_disk_quota_mb']
+  end
+
+  def upload_dir
+    raise "Unsaved users can't have an upload_dir" unless upload_eligible?
+    File.join(GrowingPanes.config['user']['upload_root_dir'], "user_#{id}")
+  end
+
+  def ensure_upload_dir
+    FileUtils.mkdir_p(upload_dir)
+  end
+
+  def upload_eligible?
+    !id.nil?
+  end
+
   protected
 
   # we don't want to force passwords on the normal case of 

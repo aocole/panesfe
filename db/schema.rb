@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150402195900) do
+ActiveRecord::Schema.define(version: 20150417193500) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -62,21 +62,22 @@ ActiveRecord::Schema.define(version: 20150402195900) do
   add_index "themes", ["user_id"], name: "index_themes_on_user_id"
 
   create_table "users", force: true do |t|
-    t.string   "email",               default: "", null: false
+    t.string   "email",                default: "", null: false
     t.string   "given_name"
     t.string   "family_name"
     t.string   "uid"
     t.string   "provider"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "role",                default: 0,  null: false
-    t.string   "encrypted_password",  default: "", null: false
+    t.integer  "role",                 default: 0,  null: false
+    t.string   "encrypted_password",   default: "", null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",       default: 0,  null: false
+    t.integer  "sign_in_count",        default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.integer  "custom_disk_quota_mb"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
