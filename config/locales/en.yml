@@ -61,3 +61,6 @@ en:
     static:
       oops: Oops!
       not_found: The page you requested could not be found.
+  errors:
+    messages:
+      would_exceed_quota: Upload would exceed available disk quota. %{attempted} upload, %{available} available.

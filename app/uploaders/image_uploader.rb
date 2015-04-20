@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 class ImageUploader < CarrierWave::Uploader::Base
+  before :cache, :check_quota
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
@@ -26,7 +27,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  process :resize_to_fit => [3840, 2160], :if => :is_image?
+  process :resize_to_limit => [3840, 2160], :if => :is_image?
   #
   # def scale(width, height)
   #   # do something
@@ -34,7 +35,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :thumb, :if => :is_image? do
-    process :resize_to_fill => [150, 150]
+    process :resize_and_pad => [150, 150]
   end
 
   version :thumb, :if => :is_video? do
@@ -60,5 +61,15 @@ class ImageUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+
+  def check_quota(new_file)
+    file_size_mb = new_file.size.to_f/(1.megabyte)
+    if file_size_mb > model.user.disk_available_mb
+      raise CarrierWave::IntegrityError, 
+        I18n.t("errors.messages.would_exceed_quota", attempted: file_size_mb, available: model.user.disk_available_mb)
+    end
+  end
+
+
 
 end

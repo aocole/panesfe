@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
     return 0 unless upload_eligible?
     return 0 unless Dir.exist?(upload_dir)
     # gets usage in kb then calculates mb. User gets 4k credit for dir size
-    (`du -sk "#{upload_dir}"`.split("\t").first.to_i - 4) / 1024.0
+    (`du -sb "#{upload_dir}"`.split("\t").first.to_i - 4.kilobytes).to_f / 1.megabyte
   end
 
   def disk_available_mb
