@@ -1,3 +1,4 @@
+require 'errors' # GrowingPanes errors
 class ApplicationController < ActionController::Base
   include Pundit
   before_action :authenticate_user!

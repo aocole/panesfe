@@ -62,11 +62,12 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
 
+  QUOTA_FMT = "%.2f"
   def check_quota(new_file)
     file_size_mb = new_file.size.to_f/(1.megabyte)
     if file_size_mb > model.user.disk_available_mb
-      raise CarrierWave::IntegrityError, 
-        I18n.t("errors.messages.would_exceed_quota", attempted: file_size_mb, available: model.user.disk_available_mb)
+      raise GrowingPanes::WouldExceedQuotaError, 
+        I18n.t("errors.messages.would_exceed_quota", attempted: QUOTA_FMT % file_size_mb, available: QUOTA_FMT % model.user.disk_available_mb)
     end
   end
 

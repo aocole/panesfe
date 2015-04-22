@@ -32,6 +32,23 @@ describe "quota enforcement" do
     end
   end
 
+  it "should have UI for quota errors" do
+    skip "Can't figure out how to get jquery-file-upload to work in an integration test"
+    quota_user = FactoryGirl.create(:user, custom_disk_quota_mb: 0)
+    user_presentation = FactoryGirl.create(:presentation, user: quota_user)
+    Dir.mktmpdir do |tmpdir|
+      allow(quota_user).to receive(:upload_dir) {tmpdir}
+
+      log_in_as quota_user
+      visit edit_presentation_path(user_presentation.id)
+      expect(current_path).to eq edit_presentation_path(user_presentation.id)
+      file = File.join(Rails.root, 'seed/images/cast-of-growing-pains.jpg')
+      # include_hidden_fields do
+        attach_file('files[]', file)
+      # end
+    end
+  end
+
   def store_a_file
     slide = presentation.slides.build()
     slide.user = user

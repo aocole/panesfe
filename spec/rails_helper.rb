@@ -63,8 +63,36 @@ def not_logged_in
   OmniAuth.config.test_mode = false
 end
 
+RSpec.configure do |config|
+  config.include Devise::TestHelpers, type: :controller
+end
+
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/cassettes'
   c.hook_into :webmock
   c.configure_rspec_metadata!
+end
+
+# By default, capybara will ignore all hidden fields. This is a smart default
+# except in rare cases. For example, our AS3 file uploader requires you to
+# click a hidden file field - and that makes perfect sense. In those rare
+# cases, you can use this helper to override the default and force capybara
+# to include hidden fields.
+#
+# Examples
+#
+#   include_hidden_fields do
+#     attach_file("hidden-input", "path/to/fixture/file")
+#   end
+#
+def include_hidden_fields
+  Capybara.ignore_hidden_elements = false
+  yield
+  Capybara.ignore_hidden_elements = true
+end
+
+def without_vcr
+  WebMock.allow_net_connect!
+  VCR.turned_off { yield }
+  WebMock.disable_net_connect!
 end

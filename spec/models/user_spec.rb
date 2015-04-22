@@ -55,6 +55,15 @@ RSpec.describe User do
       expect(quota_user.disk_available_mb ).to eq(quota_user.disk_quota_mb)
     end
 
+    it "should have 0 available disk if quota is 0" do
+      custom = 0
+      quota_user.custom_disk_quota_mb = custom
+      expect(quota_user.disk_quota_mb).to eq custom
+      expect(quota_user.disk_available_mb).to eq custom
+      quota_user.ensure_upload_dir
+      expect(quota_user.disk_available_mb).to eq custom
+    end
+
     it "should recognize changes in disk usage" do
       Dir.mktmpdir do |tmpdir|
         allow(quota_user).to receive(:upload_dir) {tmpdir}
