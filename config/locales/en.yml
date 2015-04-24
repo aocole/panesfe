@@ -65,6 +65,7 @@ en:
   errors:
     messages:
       would_exceed_quota: upload would exceed available disk quota. %{attempted}MB upload, %{available}MB available.
+      would_exceed_quota_static: Upload would exceed available disk quota.
   activerecord:
     errors:
       models:

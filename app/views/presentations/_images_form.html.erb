@@ -121,6 +121,25 @@
 /*global window, $ */
 $(function () {
     'use strict';
+
+    $.widget('blueimp.fileupload', $.blueimp.fileupload, {
+        processActions: {
+            checkDiskAvailable: function (data) {
+                var dfd = $.Deferred(),
+                    file = data.files[data.index];
+                if (file.size < this.options.diskAvailableB) {
+                    this.options.diskAvailableB -= file.size
+                    dfd.resolveWith(this, [data]);
+                } else {
+                    file.error = <%= I18n.t('errors.messages.would_exceed_quota_static').to_json.html_safe -%>;
+                    data.files.error = true;
+                    dfd.rejectWith(this, [data]);
+                }
+                return dfd.promise();
+            }
+        }
+    });
+
     // Change this to the location of your server-side upload handler:
     var url = <%=presentation_slides_url(@presentation).to_json.html_safe %>,
         uploadButton = $('<button/>')
@@ -156,7 +175,14 @@ $(function () {
         previewMaxWidth: 150,
         previewMaxHeight: 150,
         previewCrop: true,
-        sequentialUploads: true
+        sequentialUploads: true,
+        diskAvailableB: <%= @presentation.user.disk_available_b -%>,
+        processQueue: [
+            {
+                action: 'checkDiskAvailable',
+                always: true
+            }
+        ]
     }).on('fileuploadadd', function (e, data) {
         data.context = $('<div/>').appendTo('#files');
         $.each(data.files, function (index, file) {
