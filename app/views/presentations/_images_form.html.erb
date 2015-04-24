@@ -23,6 +23,7 @@
             <input type="checkbox" class="toggle"-->
             <!-- The global file processing state -->
             <span class="fileupload-process"></span>
+            <%=t 'controllers.presentations.quota_available', available: number_to_human_size(@presentation.user.disk_available_mb.megabytes), total: number_to_human_size(@presentation.user.disk_quota_mb.megabytes)%>
         </div>
         <!-- The global progress state -->
         <div class="col-lg-5 fileupload-progress fade">

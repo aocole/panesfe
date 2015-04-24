@@ -1,10 +1,10 @@
 # encoding: utf-8
 
-class ImageUploader < BaseUploader
+class ZipUploader < BaseUploader
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  include CarrierWave::MiniMagick
+  # include CarrierWave::MiniMagick
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
@@ -15,33 +15,21 @@ class ImageUploader < BaseUploader
   # end
 
   # Process files as they are uploaded:
-  process :resize_to_limit => [3840, 2160], :if => :is_image?
+  # process :scale => [200, 300]
   #
   # def scale(width, height)
   #   # do something
   # end
 
   # Create different versions of your uploaded files:
-  version :thumb, :if => :is_image? do
-    process :resize_and_pad => [150, 150]
-  end
-
-  version :thumb, :if => :is_video? do
-    # Do nothing for now until video processing supported
-  end
-
-  def is_image? slide
-    !is_video?(slide)
-  end
-
-  def is_video? slide
-    slide.content_type =~ /video/i
-  end
+  # version :thumb do
+  #   process :resize_to_fit => [50, 50]
+  # end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
-    %w(jpg jpeg gif png mp4)
+    %w(zip)
   end
 
   # Override the filename of the uploaded files:

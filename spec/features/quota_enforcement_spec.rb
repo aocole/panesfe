@@ -49,6 +49,17 @@ describe "quota enforcement" do
     end
   end
 
+  it "should display quota on presentation edit page" do
+    quota_user = FactoryGirl.create(:user, custom_disk_quota_mb: 3)
+    user_presentation = FactoryGirl.create(:presentation, user: quota_user)
+    Dir.mktmpdir do |tmpdir|
+      allow(quota_user).to receive(:upload_dir) {tmpdir}
+      log_in_as quota_user
+      visit edit_presentation_path(user_presentation.id)
+      expect(page).to have_content "3 MB"
+    end
+  end
+
   def store_a_file
     slide = presentation.slides.build()
     slide.user = user
