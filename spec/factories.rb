@@ -18,4 +18,9 @@ FactoryGirl.define do
     association :user, strategy: :build
   end
   
+  factory :foldershow do
+    name { Faker::Commerce.product_name }
+    association :user, strategy: :build
+  end
+  
 end

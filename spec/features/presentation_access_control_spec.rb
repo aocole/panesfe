@@ -21,6 +21,8 @@ describe "slideshow access control" do
       visit(edit_slideshow_path(user_slideshow))
       expect(current_path).to eq(edit_slideshow_path(user_slideshow))
       expect(find_field('Name').value).to eq user_slideshow.name
+      fill_in('Name', with: Faker::Commerce.product_name)
+      click_button 'Save'
     end
     
     it "should allow creating slideshows" do
@@ -40,6 +42,50 @@ describe "slideshow access control" do
       log_in_as user
       other_slideshow = FactoryGirl.create(:slideshow, user: other_user)
       visit(edit_slideshow_path(other_slideshow))
+      expect(current_path).to eq(not_found_path)
+    end
+  end
+end
+
+describe "foldershow access control" do
+  describe "as regular user" do
+
+    let(:user) { FactoryGirl.create(:user) }
+    let(:other_user) { FactoryGirl.create(:user) }
+
+    it "should allow viewing own foldershows" do
+      log_in_as user
+      user_foldershow = FactoryGirl.create(:foldershow, user: user)
+      other_foldershow = FactoryGirl.create(:foldershow, user: other_user)
+      visit(presentations_path)
+      expect(find('table')).to have_content user_foldershow.name
+      expect(find('table')).not_to have_content other_foldershow.name
+    end
+
+    it "should allow editing own foldershows" do
+      log_in_as user
+      user_foldershow = FactoryGirl.create(:foldershow, user: user)
+      visit(edit_foldershow_path(user_foldershow))
+      expect(current_path).to eq(edit_foldershow_path(user_foldershow))
+      expect(find_field('Name').value).to eq user_foldershow.name
+      fill_in('Name', with: Faker::Commerce.product_name)
+      click_button 'Save'
+    end
+    
+    it "should allow creating foldershows" do
+      log_in_as user
+      visit(new_foldershow_path)
+      name = Faker::Commerce.product_name
+      fill_in('Name', with: name)
+      click_button 'Save'
+      expect(current_path).to eq presentations_path
+      expect(find('table')).to have_content name
+    end
+    
+    it "should disallow actions on others foldershows" do
+      log_in_as user
+      other_foldershow = FactoryGirl.create(:foldershow, user: other_user)
+      visit(edit_foldershow_path(other_foldershow))
       expect(current_path).to eq(not_found_path)
     end
   end
