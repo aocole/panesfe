@@ -4,7 +4,7 @@ describe "Display methods access control" do
   let(:user) { FactoryGirl.create(:user) }
   let(:theme_name) { Faker::Commerce.product_name }
   let(:user_presentation) do
-   FactoryGirl.create(:presentation, 
+   FactoryGirl.create(:slideshow, 
       user: user, 
       theme: FactoryGirl.create(:theme, name: theme_name, content: "<html><body>#{theme_name}</body></html>")
     )

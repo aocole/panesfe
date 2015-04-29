@@ -1,6 +1,6 @@
 class SlidesController < ApplicationController
-  before_action :set_presentation_from_param, only: [:index, :new, :create]
-  before_action :set_presentation_from_slide, only: [:show, :destroy]
+  before_action :set_slideshow_from_param, only: [:index, :new, :create]
+  before_action :set_slideshow_from_slide, only: [:show, :destroy]
 
   def index
   end
@@ -11,12 +11,12 @@ class SlidesController < ApplicationController
   def create
     @slide = nil
     slides = params[:files].collect do |file|
-      @slide = @presentation.slides.build
+      @slide = @slideshow.slides.build
       @slide.image = file
       @slide
     end
     
-    @presentation.save
+    @slideshow.save
 
     # There's some wonky behavior required by jquery-file-upload. It only uploads one
     # file at a time, and we need to return a scalar response in that case
@@ -43,7 +43,7 @@ class SlidesController < ApplicationController
 
     respond_to do |format|
       format.html { 
-        redirect_to edit_presentation_url(@presentation), notice: 'Slide was successfully destroyed.'
+        redirect_to edit_slideshow_url(@slideshow), notice: 'Slide was successfully destroyed.'
       }
       format.json
     end
@@ -52,15 +52,15 @@ class SlidesController < ApplicationController
 
   private
 
-  def set_presentation_from_param
-    @presentation = policy_scope(Presentation).find_by_id!(params[:presentation_id])
-    authorize(@presentation)
+  def set_slideshow_from_param
+    @slideshow = policy_scope(Slideshow).find_by_id!(params[:slideshow_id])
+    authorize(@slideshow)
   end
 
-  def set_presentation_from_slide
+  def set_slideshow_from_slide
     @slide = policy_scope(Slide).find_by_id!(params[:id])
-    @presentation = @slide.presentation
-    authorize(@presentation)
+    @slideshow = @slide.slideshow
+    authorize(@slideshow)
   end
 
 end

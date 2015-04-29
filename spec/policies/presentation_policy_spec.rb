@@ -3,7 +3,7 @@ require 'support/pundit_matcher'
 describe PresentationPolicy do
   subject { PresentationPolicy.new(actor, presentation) }
 
-  let(:presentation) { FactoryGirl.build_stubbed(:presentation, :user => owner) }
+  let(:presentation) { FactoryGirl.build_stubbed(:slideshow, :user => owner) }
 
   context "for a regular user" do
     let(:actor) {FactoryGirl.build_stubbed(:user, :role => User.roles[:user])}
@@ -18,8 +18,8 @@ describe PresentationPolicy do
       it {should permit(:update)}
 
       it "should only show presentations belonging to the user" do
-        FactoryGirl.create_list(:presentation, 3, :user => owner)
-        FactoryGirl.create_list(:presentation, 4, :user => FactoryGirl.build_stubbed(:user))
+        FactoryGirl.create_list(:slideshow, 3, :user => owner)
+        FactoryGirl.create_list(:slideshow, 4, :user => FactoryGirl.build_stubbed(:user))
         expect(Pundit.policy_scope(actor, Presentation).count).to eq(3)
       end
     end
@@ -48,8 +48,8 @@ describe PresentationPolicy do
       it {should permit(:update)}
 
       it "should show all presentations" do
-        FactoryGirl.create_list(:presentation, 3, :user => owner)
-        FactoryGirl.create_list(:presentation, 4, :user => FactoryGirl.build_stubbed(:user))
+        FactoryGirl.create_list(:slideshow, 3, :user => owner)
+        FactoryGirl.create_list(:slideshow, 4, :user => FactoryGirl.build_stubbed(:user))
         expect(Pundit.policy_scope(actor, Presentation).count).to eq(7)
       end
     end

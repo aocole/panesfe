@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150423234233) do
+ActiveRecord::Schema.define(version: 20150428000125) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -30,26 +30,27 @@ ActiveRecord::Schema.define(version: 20150423234233) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
   create_table "presentations", force: true do |t|
-    t.string   "name",                       null: false
-    t.boolean  "published",  default: false, null: false
-    t.integer  "user_id",                    null: false
+    t.string   "name",                             null: false
+    t.boolean  "published",  default: false,       null: false
+    t.integer  "user_id",                          null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "theme_id"
     t.string   "folder_zip"
+    t.string   "type",       default: "Slideshow", null: false
   end
 
   add_index "presentations", ["theme_id"], name: "index_presentations_on_theme_id"
   add_index "presentations", ["user_id"], name: "index_presentations_on_user_id"
 
   create_table "slides", force: true do |t|
-    t.integer  "presentation_id", null: false
+    t.integer  "slideshow_id", null: false
     t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "slides", ["presentation_id"], name: "index_slides_on_presentation_id"
+  add_index "slides", ["slideshow_id"], name: "index_slides_on_slideshow_id"
 
   create_table "themes", force: true do |t|
     t.string   "name"

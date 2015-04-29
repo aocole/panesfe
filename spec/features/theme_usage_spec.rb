@@ -29,11 +29,11 @@ describe "theme usage" do
       expect(page).to have_content(I18n.t('controllers.auth.not_authorized'))
     end
 
-    it "should let you create a presentation with a theme" do
+    it "should let you create a slideshow with a theme" do
       yet_another_theme = FactoryGirl.create(:theme, user: other_user)
       visit(themes_path)
       page.find('tr', text: yet_another_theme.name).click_link I18n.t('controllers.themes.use_this_theme')
-      expect(current_path).to eq(new_theme_presentation_path(yet_another_theme))
+      expect(current_path).to eq(new_theme_slideshow_path(yet_another_theme))
       expect(find_field('Theme').value).to eq(yet_another_theme.id.to_s)
     end
 

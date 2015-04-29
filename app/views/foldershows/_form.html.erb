@@ -1,0 +1,45 @@
+<%= form_for @foldershow, :html => { :class => "form presentation", :role => 'form' } do |f| %>
+
+  <%= f.submit t('helpers.links.save'), :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            presentations_path, :class => 'btn btn-default' %>
+
+    <% if @foldershow.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@foldershow.errors.count, "error") %> prohibited this presentation from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @foldershow.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <%= f.text_field :name, :class => 'form-control' %>
+    <%= error_span(@foldershow[:name]) %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :folder_zip, :class => 'control-label' %>
+    <%= f.file_field :folder_zip, :class => 'form-control' %>
+    <%= error_span(@foldershow[:folder_zip]) %>
+  </div>
+
+<!--   <div class="form-group">
+    <div class="checkbox">
+      <%= label_tag do %>
+        <%= f.check_box :published %>
+        <%= Presentation.human_attribute_name(:published) %>
+      <%end%>
+      <%= error_span(@foldershow[:published]) %>
+    </div>
+  </div>
+
+ -->
+<% end %>

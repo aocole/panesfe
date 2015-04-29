@@ -23,7 +23,7 @@
             <input type="checkbox" class="toggle"-->
             <!-- The global file processing state -->
             <span class="fileupload-process"></span>
-            <%=t 'controllers.presentations.quota_available', available: number_to_human_size(@presentation.user.disk_available_mb.megabytes), total: number_to_human_size(@presentation.user.disk_quota_mb.megabytes)%>
+            <%=t 'controllers.presentations.quota_available', available: number_to_human_size(@slideshow.user.disk_available_mb.megabytes), total: number_to_human_size(@slideshow.user.disk_quota_mb.megabytes)%>
         </div>
         <!-- The global progress state -->
         <div class="col-lg-5 fileupload-progress fade">
@@ -141,7 +141,7 @@ $(function () {
     });
 
     // Change this to the location of your server-side upload handler:
-    var url = <%=presentation_slides_url(@presentation).to_json.html_safe %>,
+    var url = <%=slideshow_slides_url(@slideshow).to_json.html_safe %>,
         uploadButton = $('<button/>')
             .addClass('btn btn-primary')
             .prop('disabled', true)
@@ -176,7 +176,7 @@ $(function () {
         previewMaxHeight: 150,
         previewCrop: true,
         sequentialUploads: true,
-        diskAvailableB: <%= @presentation.user.disk_available_b -%>,
+        diskAvailableB: <%= @slideshow.user.disk_available_b -%>,
         processQueue: [
             {
                 action: 'checkDiskAvailable',

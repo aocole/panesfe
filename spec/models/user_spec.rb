@@ -65,12 +65,10 @@ RSpec.describe User do
     end
 
     it "should recognize changes in disk usage" do
-      Dir.mktmpdir do |tmpdir|
-        allow(quota_user).to receive(:upload_dir) {tmpdir}
-        before = quota_user.disk_available_mb
-        FileUtils.cp(File.join(Rails.root, 'seed/images/cast-of-growing-pains.jpg'), quota_user.upload_dir)
-        expect(quota_user.disk_available_mb).to be < before
-      end
+      before = quota_user.disk_available_b
+      quota_user.ensure_upload_dir
+      FileUtils.cp(Rails.root.join('seed/images/cast-of-growing-pains.jpg'), quota_user.upload_dir)
+      expect(quota_user.disk_available_b).to be < before
     end
 
   end

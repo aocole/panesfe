@@ -4,15 +4,20 @@ Rails.application.routes.draw do
   }
 
   resources :users
-  resources :presentations do
+resources :presentations, only: [:index, :show, :destroy] do
     get 'display', on: :member
     get 'next', on: :collection
     get 'push', on: :member
+  end
+
+  resources :slideshows do
     resources :slides, shallow: true
   end
 
+  resources :foldershows
+
   resources :themes do
-    resources :presentations, shallow: true
+    resources :slideshows, shallow: true
   end
 
   get '/presentations', to: 'presentations#index', as: 'logged_in_home'

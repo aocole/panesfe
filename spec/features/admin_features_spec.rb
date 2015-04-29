@@ -8,7 +8,7 @@ describe "admin presentations" do
 
     before :each do
       log_in_as user
-      @presentation = FactoryGirl.create(:presentation, user: user)
+      @presentation = FactoryGirl.create(:slideshow, user: user)
     end
 
     it "should have working push button", :vcr do
@@ -38,7 +38,7 @@ describe "admin presentations" do
 
     before :each do
       log_in_as user
-      @presentation = FactoryGirl.create(:presentation, user: user)
+      @presentation = FactoryGirl.create(:slideshow, user: user)
     end
 
     it "should not have push button", :vcr do

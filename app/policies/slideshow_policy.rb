@@ -1,0 +1,3 @@
+class SlideshowPolicy < PresentationPolicy
+
+end

@@ -45,53 +45,6 @@ class PresentationsController < ApplicationController
     end
   end
 
-  # GET /presentations/new
-  def new
-    @presentation = Presentation.new
-    authorize @presentation
-    @presentation.slides.build
-    if params[:theme_id]
-      @presentation.theme = policy_scope(Theme).find_by_id(params[:theme_id])
-    end
-  end
-
-  # GET /presentations/1/edit
-  def edit
-    @presentation.slides.build
-  end
-
-  # POST /presentations
-  # POST /presentations.json
-  def create
-    @presentation = Presentation.new(presentation_params)
-    authorize @presentation
-    @presentation.user = current_user
-
-    respond_to do |format|
-      if @presentation.save
-        format.html { redirect_to edit_presentation_path(@presentation), notice: t('controllers.presentations.created_flash') }
-        format.json { render :show, status: :created, location: @presentation }
-      else
-        format.html { render :new }
-        format.json { render json: @presentation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /presentations/1
-  # PATCH/PUT /presentations/1.json
-  def update
-    respond_to do |format|
-      if @presentation.update(presentation_params)
-        format.html { redirect_to @presentation, notice: 'Presentation was successfully updated.' }
-        format.json { render :show, status: :ok, location: @presentation }
-      else
-        format.html { render :edit }
-        format.json { render json: @presentation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /presentations/1
   # DELETE /presentations/1.json
   def destroy
@@ -107,10 +60,5 @@ class PresentationsController < ApplicationController
     def set_presentation
       @presentation = policy_scope(Presentation).find_by_id!(params[:id])
       authorize @presentation
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def presentation_params
-      params.require(:presentation).permit(:name, :published, :theme_id, slides_attributes: [:id, :image, :_destroy])
     end
 end

@@ -2,26 +2,37 @@
   <%- model_class = Presentation -%>
   <div class="page-header">
     <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+    <h4><%=t( 'controllers.presentations.explanation').html_safe %></h4>
   </div>
 </div>
 <div class="row">
   <div class="col-md-2">
     <h4>
-      <%= link_to t('.new', :default => t("helpers.titles.new", model: model_class.model_name.human.titleize)),
-                  new_presentation_path,
+      <%= link_to t('.new', :default => t("helpers.titles.new", model: Slideshow.model_name.human.titleize)),
+                  new_slideshow_path,
                   :class => 'btn btn-primary' %>
     </h4>
   </div>
   <div class="col-md-10">
+    <h4><%=t( 'controllers.presentations.slideshow_explanation').html_safe %></h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-2">
     <h4>
-      <%=t( 'controllers.presentations.explanation').html_safe %>
+      <%= link_to t('.new', :default => t("helpers.titles.new", model: Foldershow.model_name.human.titleize)),
+                  new_foldershow_path,
+                  :class => 'btn btn-primary' %>
     </h4>
+  </div>
+  <div class="col-md-10">
+    <h4><%=t( 'controllers.presentations.foldershow_explanation').html_safe %></h4>
   </div>
 </div>
 
 <%if @presentations.blank? %>
   <h4>
-    <%=sprintf(t( 'controllers.presentations.no_presentations'), new_presentation_path).html_safe %>
+    <%=sprintf(t( 'controllers.presentations.no_presentations'), new_slideshow_path).html_safe %>
   </h4>
 <% else %>
 <table class="table table-striped">
@@ -44,8 +55,14 @@
         <!-- <td><%= presentation.user_id %></td> -->
         <td><%=l presentation.created_at %></td>
         <td>
+          <% edit_url = if presentation.kind_of? Slideshow
+            edit_slideshow_path(presentation)
+          else
+            edit_foldershow_path(presentation)
+          end
+          %>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_presentation_path(presentation), :class => 'btn btn-default btn-xs' %>
+                      edit_url, :class => 'btn btn-default btn-xs' %>
           <% if policy(presentation).push? %>
             <%= link_to t('.push', :default => t("helpers.links.push")),
                         push_presentation_path(presentation), :class => 'btn btn-default btn-xs' %>

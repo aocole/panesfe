@@ -48,6 +48,12 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  config.after(:all) do
+    if Rails.env.test?
+      FileUtils.rm_rf(Dir["#{User::UPLOAD_BASE}/[^.]*"])
+    end
+  end
 end
 
 def log_in_as(user)
@@ -96,3 +102,11 @@ def without_vcr
   VCR.turned_off { yield }
   WebMock.disable_net_connect!
 end
+
+# Visit a url and then expect that to be where you are. 
+# I feel like this should be built-in to capybara.
+def visit_expect(url)
+    visit url
+    expect(current_path).to eq url
+end
+

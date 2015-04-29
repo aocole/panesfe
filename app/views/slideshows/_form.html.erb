@@ -1,17 +1,17 @@
-<%= form_for @presentation, :html => { :class => "form presentation", :role => 'form' } do |f| %>
+<%= form_for @slideshow, :html => { :class => "form presentation", :role => 'form' } do |f| %>
 
   <%= f.submit t('helpers.links.save'), :class => 'btn btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
             presentations_path, :class => 'btn btn-default' %>
 
-    <% if @presentation.errors.any? %>
+    <% if @slideshow.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
       <div class="panel-heading">
-        <h3 class="panel-title"><%= pluralize(@presentation.errors.count, "error") %> prohibited this presentation from being saved:</h3>
+        <h3 class="panel-title"><%= pluralize(@slideshow.errors.count, "error") %> prohibited this presentation from being saved:</h3>
       </div>
       <div class="panel-body">
         <ul>
-        <% @presentation.errors.full_messages.each do |msg| %>
+        <% @slideshow.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
         </ul>
@@ -22,13 +22,13 @@
   <div class="form-group">
     <%= f.label :name, :class => 'control-label' %>
     <%= f.text_field :name, :class => 'form-control' %>
-    <%= error_span(@presentation[:name]) %>
+    <%= error_span(@slideshow[:name]) %>
   </div>
 
   <div class="form-group">
     <%= f.label :theme_id, :class => 'control-label' %>
     <%= f.collection_select :theme_id, Theme.select(:id, :name), :id, :name %>
-    <%= error_span(@presentation[:theme_id]) %>
+    <%= error_span(@slideshow[:theme_id]) %>
   </div>
 
 <!--   <div class="form-group">
@@ -37,11 +37,11 @@
         <%= f.check_box :published %>
         <%= Presentation.human_attribute_name(:published) %>
       <%end%>
-      <%= error_span(@presentation[:published]) %>
+      <%= error_span(@slideshow[:published]) %>
     </div>
   </div>
 
  -->
 <% end %>
 
-<%= if @presentation.id then render(partial: 'images_form') end%>
+<%= if @slideshow.id then render(partial: 'images_form') end%>

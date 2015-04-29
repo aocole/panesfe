@@ -12,7 +12,7 @@ FactoryGirl.define do
     name { Faker::Commerce.product_name }
   end
 
-  factory :presentation do
+  factory :slideshow do
     name { Faker::Commerce.product_name }
     theme
     association :user, strategy: :build

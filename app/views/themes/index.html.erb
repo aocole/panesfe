@@ -20,7 +20,7 @@
         <td><%= theme.description %></td>
         <td><%=l theme.created_at %></td>
         <td>
-          <%= link_to t('controllers.themes.use_this_theme'), new_theme_presentation_path(theme), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('controllers.themes.use_this_theme'), new_theme_slideshow_path(theme), :class => 'btn btn-default btn-xs' %>
           <% if policy(theme).edit? %>
             <%= link_to t('.edit', :default => t("helpers.links.edit")),
                         edit_theme_path(theme), :class => 'btn btn-default btn-xs' %>

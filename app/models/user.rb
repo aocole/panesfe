@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  UPLOAD_BASE = File.join(GrowingPanes.config['user']['upload_root_dir'], Rails.env)
+  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, 
@@ -64,7 +66,7 @@ class User < ActiveRecord::Base
 
   def upload_dir
     raise "Unsaved users can't have an upload_dir" unless upload_eligible?
-    File.join(GrowingPanes.config['user']['upload_root_dir'], "user_#{id}")
+    File.join(UPLOAD_BASE, "user_#{id}")
   end
 
   def ensure_upload_dir

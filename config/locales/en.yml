@@ -46,8 +46,14 @@ en:
         A <i>Presentation</i> is a set of content for the video wall that is meant to be
         displayed together. Create a presentation, and then add content to it. Edit an
         existing presentation to add, remove, or re-organize content.
+      slideshow_explanation: 
+        A <i>Slideshow</i> is a type of presentation that contains static images and/or video
+        that will be displayed according to a <i>Theme</i>.
+      foldershow_explanation: 
+        A <i>Foldershow</i> is a type of presentation that contains an uploaded folder of your
+        custom HTML, CSS, images, and other assets that can utilize the full capabilities of
+        the video wall.
       no_presentations: No presentations yet. <a href="%s">Create one?</a>
-      created_flash: Presentation was successfully created. Now add some content.
       panesd_offline: Could not connect to the video wall controller.
       presentation_pushed: Presentation pushed successfully
       quota_available: "%{available} of %{total} disk space available."
@@ -62,6 +68,10 @@ en:
     static:
       oops: Oops!
       not_found: The page you requested could not be found.
+    foldershows:
+      created_flash: Foldershow was created successfully.
+    slideshows:
+      created_flash: Slideshow was created successfully. Now add some content.
   errors:
     messages:
       would_exceed_quota: upload would exceed available disk quota. %{attempted}MB upload, %{available}MB available.
@@ -72,4 +82,4 @@ en:
         presentation:
           attributes:
             base:
-              folder_xor_slideshow: must be either a slideshow or a folder presentation, and not both
+              foldershow_xor_slideshow: must be either a slideshow or a foldershow, and not both
