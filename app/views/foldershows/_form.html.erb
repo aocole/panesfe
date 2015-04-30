@@ -19,16 +19,16 @@
     </div>
   <% end %>
 
-  <div class="form-group">
+  <div class="form-group <%=form_group_error_class @foldershow, :name %>">
     <%= f.label :name, :class => 'control-label' %>
     <%= f.text_field :name, :class => 'form-control' %>
-    <%= error_span(@foldershow[:name]) %>
+    <%= field_error @foldershow, :name %>
   </div>
 
-  <div class="form-group">
+  <div class="form-group <%=form_group_error_class @foldershow, :folder_zip %>">
     <%= f.label :folder_zip, :class => 'control-label' %>
     <%= f.file_field :folder_zip, :class => 'form-control' %>
-    <%= error_span(@foldershow[:folder_zip]) %>
+    <%= field_error @foldershow, :folder_zip %>
   </div>
 
 <!--   <div class="form-group">

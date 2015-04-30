@@ -19,16 +19,16 @@
     </div>
   <% end %>
 
-  <div class="form-group">
+  <div class="form-group <%=form_group_error_class @slideshow, :name %>">
     <%= f.label :name, :class => 'control-label' %>
     <%= f.text_field :name, :class => 'form-control' %>
-    <%= error_span(@slideshow[:name]) %>
+    <%= field_error(@slideshow, :name) %>
   </div>
 
-  <div class="form-group">
+  <div class="form-group <%=form_group_error_class @slideshow, :theme %>">
     <%= f.label :theme_id, :class => 'control-label' %>
     <%= f.collection_select :theme_id, Theme.select(:id, :name), :id, :name %>
-    <%= error_span(@slideshow[:theme_id]) %>
+    <%= field_error(@slideshow, :theme) %>
   </div>
 
 <!--   <div class="form-group">
