@@ -40,6 +40,11 @@ describe "Display methods access control" do
       expect(page).to have_content 'Bootstrap v3.3.4 (http://getbootstrap.com)'
     end
 
+    it "should display a foldershow javascript subpath" do
+      visit_expect display_presentation_path_path(user_foldershow, 'js/hello.js')
+      expect(page).to have_content 'var foo'
+    end
+
     it "should display 404 for nonexistant foldershow subpath" do
       visit_expect display_presentation_path_path(user_foldershow, 'adfgjkdfgjkhasdfg')
       expect(page).to have_content 'The page you requested could not be found.'

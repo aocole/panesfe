@@ -2,6 +2,7 @@ class PresentationsController < ApplicationController
   skip_after_action :verify_authorized, only: [:display, :next]
   skip_before_action :authenticate_user!, only: [:display, :next]
   before_action :set_presentation, only: [:show, :push, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token, only: [:display]
 
   # GET /presentations
   # GET /presentations.json
