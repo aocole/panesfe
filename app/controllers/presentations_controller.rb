@@ -38,10 +38,31 @@ class PresentationsController < ApplicationController
 
   # GET /presentations/1/display
   def display
-    @presentation = Presentation.find_by_id!(params[:id])
-    respond_to do |format|
-      format.html { render html: @presentation.theme.content.html_safe }
-      format.json { render json: @presentation.slides }
+    presentation = Presentation.find_by_id!(params[:id])
+    case presentation
+    when Slideshow
+      respond_to do |format|
+        format.html { render html: presentation.theme.content.html_safe }
+        format.json { render json: presentation.slides }
+      end
+    when Foldershow
+      if params[:path].blank?
+        redirect_to path: 'index.html'
+        return
+      end
+      Zip::File.open(presentation.folder_zip.path) do |zipfile|
+        tmpfile = Tempfile.new(["presentation_#{presentation.id}_", File.extname(params[:path])])
+        overwrite = true # Need this so Rubyzip will write overwrite the (empty) new tmpfile
+        zip_entry = zipfile.find_entry(params[:path])
+        if zip_entry
+          zip_entry.extract(tmpfile.path) { overwrite }
+          send_file tmpfile.path, disposition: 'inline'
+        else
+          render template: 'static/not_found'
+        end
+      end
+    else
+      raise "Don't know how to display #{presentation.inspect}"
     end
   end
 

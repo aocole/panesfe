@@ -48,6 +48,8 @@ gem "therubyracer"
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem "twitter-bootstrap-rails"
 
+gem 'rubyzip', require: 'zip' # for unzipping foldershows
+
 group :test do
   gem 'rspec-rails', '~>3.1'
   gem 'factory_girl_rails'

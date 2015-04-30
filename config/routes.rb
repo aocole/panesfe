@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get 'next', on: :collection
     get 'push', on: :member
   end
+  get 'presentations/:id/display/*path', to: 'presentations#display', format: false, as: 'display_presentation_path'
 
   resources :slideshows, except: presentation_superclass_methods do
     resources :slides, shallow: true
