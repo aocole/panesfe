@@ -29,7 +29,7 @@ describe "new presentation flow" do
     click_button "Save"
     expect(current_path).to eq foldershows_path
     expect(page).to have_content "error"
-    expect(page).to have_content "not allowed to upload"
+    expect(page).to have_content 'cannot be a "jpg" file. Allowed file extensions: zip'
     expect(page).not_to have_content "Folder zip You are not"
   end
 

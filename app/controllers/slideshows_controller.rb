@@ -39,7 +39,7 @@ class SlideshowsController < ApplicationController
   def update
     respond_to do |format|
       if @slideshow.update(slideshow_params)
-        format.html { redirect_to @slideshow, notice: 'Presentation was successfully updated.' }
+        format.html { redirect_to presentation_path(@slideshow), notice: 'Presentation was successfully updated.' }
         format.json { render :show, status: :ok, location: @slideshow }
       else
         format.html { render :edit }

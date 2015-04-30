@@ -3,18 +3,20 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'auth'
   }
 
+  presentation_superclass_methods = [:index, :show, :destroy]
+
   resources :users
-resources :presentations, only: [:index, :show, :destroy] do
+  resources :presentations, only: presentation_superclass_methods do
     get 'display', on: :member
     get 'next', on: :collection
     get 'push', on: :member
   end
 
-  resources :slideshows do
+  resources :slideshows, except: presentation_superclass_methods do
     resources :slides, shallow: true
   end
 
-  resources :foldershows
+  resources :foldershows, except: presentation_superclass_methods
 
   resources :themes do
     resources :slideshows, shallow: true

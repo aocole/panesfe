@@ -18,10 +18,13 @@ describe "slideshow access control" do
     it "should allow editing own slideshows" do
       log_in_as user
       user_slideshow = FactoryGirl.create(:slideshow, user: user)
-      visit_expect(edit_slideshow_path(user_slideshow))
+      visit_expect(presentations_path)
+      click_link_or_button("Edit")
+      expect(current_path).to eq edit_slideshow_path(user_slideshow)
       expect(find_field('Name').value).to eq user_slideshow.name
       fill_in('Name', with: Faker::Commerce.product_name)
       click_button 'Save'
+      expect(current_path).to eq(presentation_path(user_slideshow))
     end
     
     it "should allow deleting own foldershows" do
@@ -32,6 +35,32 @@ describe "slideshow access control" do
       click_link_or_button('Delete')
       expect(current_path).to eq presentations_path
       expect(page).not_to have_xpath(".//table/tbody/tr")
+    end
+    
+    it "should show own slideshows" do
+      log_in_as user
+      user_slideshow = FactoryGirl.create(:slideshow, user: user)
+      visit_expect(presentations_path)
+      click_link(user_slideshow.name)
+      expect(current_path).to eq(presentation_path(user_slideshow))
+      expect(page).to have_content(user_slideshow.name)
+    end
+
+    it "should go back from show slideshow" do
+      log_in_as user
+      user_slideshow = FactoryGirl.create(:slideshow, user: user)
+      visit_expect(presentation_path(user_slideshow))
+      click_link_or_button('Back')
+      expect(current_path).to eq(presentations_path)
+    end
+    
+    it "should delete from show slideshow" do
+      log_in_as user
+      user_slideshow = FactoryGirl.create(:slideshow, user: user)
+      visit_expect(presentation_path(user_slideshow))
+      click_link_or_button('Delete')
+      expect(current_path).to eq(presentations_path)
+      expect(page).not_to have_content(user_slideshow.name)
     end
     
     it "should allow creating slideshows" do
@@ -88,6 +117,32 @@ describe "foldershow access control" do
       click_link_or_button('Delete')
       expect(current_path).to eq presentations_path
       expect(page).not_to have_xpath(".//table/tbody/tr")
+    end
+    
+    it "should show own foldershows" do
+      log_in_as user
+      user_foldershow = FactoryGirl.create(:foldershow, user: user)
+      visit_expect(presentations_path)
+      click_link(user_foldershow.name)
+      expect(current_path).to eq(presentation_path(user_foldershow))
+      expect(page).to have_content(user_foldershow.name)
+    end
+
+    it "should go back from show foldershow" do
+      log_in_as user
+      user_foldershow = FactoryGirl.create(:foldershow, user: user)
+      visit_expect(presentation_path(user_foldershow))
+      click_link_or_button('Back')
+      expect(current_path).to eq(presentations_path)
+    end
+    
+    it "should delete from show foldershow" do
+      log_in_as user
+      user_foldershow = FactoryGirl.create(:foldershow, user: user)
+      visit_expect(presentation_path(user_foldershow))
+      click_link_or_button('Delete')
+      expect(current_path).to eq(presentations_path)
+      expect(page).not_to have_content(user_foldershow.name)
     end
     
     it "should allow creating foldershows" do
