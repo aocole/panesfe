@@ -4,7 +4,7 @@ class SlidePolicy < ApplicationPolicy
   
     def resolve
       if user.user?
-        scope.includes(:presentation).where(presentations: {user_id: user})
+        scope.includes(:slideshow).where(presentations: {user_id: user})
       elsif user.adminish?
         scope.all
       end
