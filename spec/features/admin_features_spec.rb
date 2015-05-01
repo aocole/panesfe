@@ -29,6 +29,7 @@ describe "admin presentations" do
       page.find('tr', text: @presentation.name).click_link I18n.t('helpers.links.push')
       expect(current_path).to eq(presentations_path)
       expect(page).to have_content(I18n.t('controllers.presentations.panesd_offline'))
+      expect(page).not_to have_content('pushed successfully')
     end
   end
 

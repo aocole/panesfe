@@ -33,8 +33,9 @@ class PresentationsController < ApplicationController
       Panesd.new(display_presentation_url(@presentation, host: panesfe_endpoint.host, port: panesfe_endpoint.port)).push
     rescue Errno::ECONNREFUSED
       flash[:error] = t('controllers.presentations.panesd_offline')
+    else
+      flash[:notice] = t('controllers.presentations.presentation_pushed')
     end
-    flash[:notice] = t('controllers.presentations.presentation_pushed')
     redirect_to action: :index
   end
 
