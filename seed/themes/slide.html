@@ -43,6 +43,8 @@
         if (transition.upcoming_slide == 0) {
           GrowingPanes.done();
           return false;
+        } else {
+          GrowingPanes.keepAlive();
         }
         playVideo(e, transition);
       }
