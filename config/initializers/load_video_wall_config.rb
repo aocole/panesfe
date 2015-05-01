@@ -5,6 +5,8 @@ class GrowingPanes
 
     # Special handling for certain fields
     @config['user']['upload_root_dir'] = File.expand_path(@config['user']['upload_root_dir'], Rails.root)
+
+    return @config
   end
 end
 

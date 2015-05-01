@@ -29,7 +29,8 @@ class PresentationsController < ApplicationController
 
   def push
     begin
-      Panesd.new(display_presentation_url(@presentation)).push
+      panesfe_endpoint = URI.parse GrowingPanes.config['system']['panesfe_endpoint']
+      Panesd.new(display_presentation_url(@presentation, host: panesfe_endpoint.host, port: panesfe_endpoint.port)).push
     rescue Errno::ECONNREFUSED
       flash[:error] = t('controllers.presentations.panesd_offline')
     end

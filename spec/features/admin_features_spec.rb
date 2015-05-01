@@ -22,7 +22,7 @@ describe "admin presentations" do
     it "should detect disconnected panesd server", :vcr do
       allow(fake_panesd).to receive(:push).and_raise(Errno::ECONNREFUSED)
       allow(Panesd).to receive(:new).
-        with(display_presentation_url(@presentation)).
+        with("http://localhost/presentations/#{@presentation.id}/display").
         and_return(fake_panesd)
 
       visit presentations_path
