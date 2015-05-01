@@ -28,6 +28,9 @@ RSpec.describe Presentation do
 
       foldershow.name = Faker::Commerce.product_name
       foldershow.user = FactoryGirl.build_stubbed(:user)
+      expect(foldershow.save).to be_falsy
+      expect(foldershow.errors.keys).to eq [:folder_zip]
+      
       File.open(Rails.root.join('seed/folder_zips/demo01.zip')) do |f|
         foldershow.folder_zip = f
       end
