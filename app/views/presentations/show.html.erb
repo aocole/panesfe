@@ -6,8 +6,8 @@
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
   <dd><%= @presentation.name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:published) %>:</strong></dt>
-  <dd><%= @presentation.published %></dd>
+<!--   <dt><strong><%= model_class.human_attribute_name(:published) %>:</strong></dt>
+  <dd><%= @presentation.published %></dd> -->
   <% if @presentation.kind_of? Foldershow %>
     <dt><strong><%= model_class.human_attribute_name(:folder_zip) %>:</strong></dt>
     <dd><%= @presentation.folder_zip %></dd>
