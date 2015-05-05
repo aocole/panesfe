@@ -76,7 +76,7 @@ en:
                   <li>Must contain a file called <code>index.html</code> at the top level of the zip. This is what will be displayed.</li>
                   <li>Must use relative (not starting with a slash) paths to other assets contained in the zip. E.g.: <code>&lt;link href="css/bootstrap.min.css" rel="stylesheet"&gt;</code>
                   <li>Cannot load any resources (images, scripts, stylesheets) from the web. These must all be packaged in your zip.</li>
-                  <li>Screen resolution is 4096&times;2160.</li>
+                  <li>Total display size is 4096&times;2160 pixels.</li>
                   <li>Presentation will end after 30 seconds.</li>
                 </ul>
     slideshows:
