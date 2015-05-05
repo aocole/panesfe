@@ -65,8 +65,9 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring',        group: :development
-  gem 'pry-rails',        group: :development
+  gem 'spring'
+  gem 'pry-rails'
+  gem 'pry-byebug'
 end
 
 gem 'delayed_job_active_record'
@@ -74,4 +75,5 @@ gem 'rest-client'
 
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'streamio-ffmpeg'
 gem 'jquery-ui-rails'

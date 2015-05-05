@@ -1,10 +1,11 @@
 # encoding: utf-8
-
+require 'carrierwave/video_thumbnailer'
 class ImageUploader < BaseUploader
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
+  include CarrierWave::VideoThumbnailer
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
@@ -15,19 +16,22 @@ class ImageUploader < BaseUploader
   # end
 
   # Process files as they are uploaded:
-  process :resize_to_limit => [3840, 2160], :if => :is_image?
+  process resize_to_limit: [3840, 2160], if: :is_image?
   #
   # def scale(width, height)
   #   # do something
   # end
 
-  # Create different versions of your uploaded files:
-  version :thumb, :if => :is_image? do
-    process :resize_and_pad => [150, 150]
-  end
+  version :thumb do
+    process resize_and_pad: [150, 150], if: :is_image? 
+    process video_thumb: [150, 150], if: :is_video?# do
+    #   binding.pry
+    #   process convert: 'png'
+    # end
 
-  version :thumb, :if => :is_video? do
-    # Do nothing for now until video processing supported
+    def full_filename(for_file=file)
+      super.chomp('mp4') + 'png'
+    end
   end
 
   def is_image? slide
