@@ -33,13 +33,7 @@ en:
     settings: Settings
   action:
     create: Create
-
-  models:
-    presentation:
-      presentation: Presentation
-      name: Presentation Name
-      updated_at: Last Changed
-
+    
   controllers:
     presentations:
       explanation: 
@@ -87,6 +81,11 @@ en:
       would_exceed_quota_static: Upload would exceed available disk quota.
       extension_white_list_error: "cannot be a %{extension} file. Allowed file extensions: %{allowed_types}"
   activerecord:
+    attributes:
+      presentation:
+        user_id: Author
+        name: Presentation Name
+        # updated_at: Last Changed
     errors:
       models:
         presentation:
