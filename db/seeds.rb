@@ -11,24 +11,30 @@ admin = User.where(role: User.roles[:admin]).first || User.create!(
     role: User.roles[:admin]
   )
 
-if Theme.count < 1
-  puts "Creating themes..."
-  Theme.create!(
-    content: File.read(Rails.root.join('seed', 'themes', 'slide.html')),
-    user: admin,
-    name: 'Slide',
-    description: "Images slide from right to left"
-  )
+puts "Updating themes..."
+theme = Theme.find_or_initialize_by(
+  user: admin,
+  name: 'Slide'
+)
+theme.content = File.read(Rails.root.join('seed', 'themes', 'slide.html'))
+theme.description = "Images slide from right to left"
+theme.save!
 
-  Theme.create!(
-    content: File.read(Rails.root.join('seed', 'themes', 'slide.html')).sub("animation: 'slide'", "animation: 'fade'"),
-    user: admin,
-    name: 'Fade',
-    description: "Crossfade between images"
-  )
-end
+theme = Theme.find_or_initialize_by(
+  user: admin,
+  name: 'Video'
+)
+theme.content = File.read(Rails.root.join('seed', 'themes', 'video.html'))
+theme.description = "Play a single video slide"
+theme.save!
 
-theme = Theme.where(name: 'Fade').first || Theme.first
+theme = Theme.find_or_initialize_by(
+  user: admin,
+  name: 'Fade'
+)
+theme.content = File.read(Rails.root.join('seed', 'themes', 'slide.html')).sub("animation: 'slide'", "animation: 'fade'")
+theme.description = "Crossfade between images"
+theme.save!
 
 if Presentation.count < 1
   puts "Creating presentation..."
