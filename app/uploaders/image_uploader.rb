@@ -30,7 +30,7 @@ class ImageUploader < BaseUploader
     # end
 
     def full_filename(for_file=file)
-      super.chomp('mp4') + 'png'
+      super.sub(/\.mp4$/, '.png')
     end
   end
 
