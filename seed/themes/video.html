@@ -5,7 +5,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="/jquery.min.js"></script>
-  <script src="/jquery.animate-enhanced.min.js"></script>
   <style>
     body {
       background-color: black;
@@ -49,21 +48,22 @@
 
       var video = $('video')
 
-      var top = 0;
-      if (video.height() <= (window.outerHeight / 2)) {
-        // If the whole video will fit on the top screens,
-        // move it up so there is no horizontal seam
-        top = (window.outerHeight / 2) - video.height()
-      } else {
-        top = (window.outerHeight - video.height()) / 2
-      }
-      video.css({
-        top: top
-      })
-      video.on('ended', function(){
-        GrowingPanes.done();
-      })
-
+      video.on('resize', function() {
+        var video_top = 0;
+        if (video.height() <= ($(window).height() / 2)) {
+          // If the whole video will fit on the upper screens,
+          // move it up so there is no horizontal seam
+          video_top = ($(window).height() / 2) - video.height()
+        } else {
+          video_top = ($(window).height() - video.height()) / 2
+        }
+        video.css({
+          top: video_top
+        })
+        video.on('ended', function(){
+          GrowingPanes.done();
+        })
+      });
 
     });
   </script>
