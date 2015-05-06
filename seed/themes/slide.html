@@ -22,14 +22,11 @@
       var slidedata = e.originalEvent.detail.slideData;
 
       $.each(slidedata, function(i, slide) {
-        container.append("<img src=\"" + slide.image.url + "\" />");
-        // <% if slide.is_image? %>
-        //   <%= image_tag slide.image.url, alt: ''%>
-        // <% elsif slide.is_video? %>
-        //   <video src="<%=slide.image_url%>" autoplay></video>
-        // <% else %>
-        //   <% raise "slide format not supported!" %>
-        // <% end %>
+        if (slide.image.url.match(/\.mp4/)) {
+          container.append("<video autoplay src=\"" + slide.image.url + "\" />");
+        } else {
+          container.append("<img src=\"" + slide.image.url + "\" />");
+        }
       });
 
       var playVideo = function(e, transition) {
