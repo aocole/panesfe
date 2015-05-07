@@ -1,5 +1,27 @@
 class UserPolicy < ApplicationPolicy
 
+  def create?
+    user.adminish?
+  end
+
+  def destroy?
+    # must be admin, and can't delete yourself
+    user.adminish? && record != user
+  end
+
+  def permitted_attributes
+    return [] unless admin_or_owner?
+    
+    permitted = [:encrypted_password, :family_name, :given_name]
+    if user.adminish?
+      permitted += [:custom_disk_quota_mb]
+      if record != user
+        permitted += [:role]
+      end
+    end
+    return permitted
+  end
+
   class Scope < Scope
   
     def resolve
@@ -11,4 +33,11 @@ class UserPolicy < ApplicationPolicy
     end
 
   end
+
+  private
+
+  def admin_or_owner?
+    record == user || user.adminish?
+  end
+
 end
