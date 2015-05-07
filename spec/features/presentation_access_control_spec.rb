@@ -24,7 +24,7 @@ describe "slideshow access control" do
       expect(find_field('Name').value).to eq user_slideshow.name
       fill_in('Name', with: Faker::Commerce.product_name)
       click_button 'Save'
-      expect(current_path).to eq(presentation_path(user_slideshow))
+      expect(current_path).to eq(presentations_path)
     end
     
     it "should allow deleting own foldershows" do
@@ -68,12 +68,12 @@ describe "slideshow access control" do
       theme = FactoryGirl.create(:theme)
       visit_expect(new_slideshow_path)
       expect(page).to have_select('Theme', options: [theme.name])
-      name = Faker::Commerce.product_name
+      name = Faker::Commerce.product_name + rand(2000).to_s
       fill_in('Name', with: name)
       select(theme.name, from: 'Theme')
       click_button 'Save'
-      expect(current_path).to match(/slideshows\/\d+\/edit/)
-      expect(find_field('Name').value).to eq name
+      expect(current_path).to eq presentations_path
+      expect(page).to have_content name
     end
     
     it "should disallow actions on others slideshows" do
