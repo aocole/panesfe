@@ -150,6 +150,7 @@ describe "foldershow access control" do
       visit_expect(new_foldershow_path)
       name = Faker::Commerce.product_name
       fill_in('Name', with: name)
+      attach_file('Folder zip', Rails.root.join('seed/folder_zips/hello_world.zip'))
       click_button 'Save'
       expect(current_path).to eq presentations_path
       expect(find('table')).to have_content name

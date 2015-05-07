@@ -20,7 +20,9 @@ FactoryGirl.define do
   
   factory :foldershow do
     name { Faker::Commerce.product_name }
+    # order of user and folder_zip matters - must have a user before "uploading"
     association :user, strategy: :build
+    folder_zip { File.open(Rails.root.join('seed/folder_zips/hello_world.zip')) }
   end
   
 end
