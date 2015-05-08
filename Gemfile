@@ -58,6 +58,8 @@ group :test do
   gem 'vcr'
   gem 'webmock'
   gem 'simplecov', :require => false
+  gem 'poltergeist'
+  gem 'database_cleaner'
 end
 
 group :development do

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :slideshows, shallow: true
   end
 
+  get '/settings', to: 'users#settings', as: 'settings'
   get '/presentations', to: 'presentations#index', as: 'logged_in_home'
   get '/about', to: 'static#about', as: 'logged_out_home'
   get '/404', to: 'static#not_found', as: 'not_found'

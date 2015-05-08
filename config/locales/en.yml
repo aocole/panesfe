@@ -74,6 +74,11 @@ en:
                 </ul>
     slideshows:
       created_flash: Slideshow was created successfully. Now add some content.
+    users:
+      use_default: "Use default (%{default_quota}MB)"
+      use_custom: "Custom"
+      edit:
+        title: User Settings
   errors:
     messages:
       would_exceed_quota: upload would exceed available disk quota. %{attempted}MB upload, %{available}MB available.
@@ -81,6 +86,10 @@ en:
       extension_white_list_error: "cannot be a %{extension} file. Allowed file extensions: %{allowed_types}"
   activerecord:
     attributes:
+      user:
+        role/admin: Administrator
+        role/user: Normal User
+        custom_disk_quota_mb: Disk Quota
       presentation:
         user_id: Author
         name: Presentation Name

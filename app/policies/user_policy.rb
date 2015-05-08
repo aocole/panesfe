@@ -4,9 +4,25 @@ class UserPolicy < ApplicationPolicy
     user.adminish?
   end
 
-  def destroy?
+  def settings?
+    record == user
+  end
+
+  def show?
     # must be admin, and can't delete yourself
     user.adminish? && record != user
+  end
+
+  def edit?
+    show?
+  end
+
+  def update?
+    edit? || settings?
+  end
+
+  def destroy?
+    edit?
   end
 
   def permitted_attributes

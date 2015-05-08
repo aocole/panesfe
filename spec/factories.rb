@@ -5,6 +5,8 @@ FactoryGirl.define do
     email { Faker::Internet.email }
     password { Faker::Internet.password }
     provider 'google_oauth2'
+    given_name { Faker::Name.first_name }
+    family_name { Faker::Name.last_name }
   end
 
   factory :theme do

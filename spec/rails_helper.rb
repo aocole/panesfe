@@ -4,6 +4,7 @@ require 'spec_helper'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
+require 'capybara/poltergeist'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -32,7 +33,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -56,11 +57,18 @@ RSpec.configure do |config|
   end
 end
 
+require 'support/database_cleaner'
+
 def log_in_as(user)
   OmniAuth.config.test_mode = true
   OmniAuth.config.mock_auth[user.provider.intern] = OmniAuth::AuthHash.new({
     provider: user.provider.to_s,
     uid: user.uid,
+    info: {
+      given_name: user.given_name,
+      family_name: user.family_name,
+      email: user.email,
+    }
   })
   visit user_omniauth_authorize_path(user.provider.intern)
 end
@@ -110,3 +118,4 @@ def visit_expect(url)
     expect(current_path).to eq url
 end
 
+Capybara.javascript_driver = :poltergeist

@@ -11,9 +11,10 @@ describe UserPolicy do
       it {should_not permit(:new)}
       it {should_not permit(:create)}
       it {should_not permit(:destroy)}
-      it {should permit(:show)}
-      it {should permit(:edit)}
+      it {should_not permit(:edit)}
+      it {should_not permit(:show)}
       it {should permit(:update)}
+      it {should permit(:settings)}
 
       it "should only show the current user" do
         FactoryGirl.create_list(:user, 5)
@@ -27,10 +28,13 @@ describe UserPolicy do
 
     context "acting on another user" do
       let(:target_user) {FactoryGirl.build_stubbed(:user)}
-      it {should_not permit(:show)}
+      it {should_not permit(:new)}
+      it {should_not permit(:create)}
       it {should_not permit(:destroy)}
       it {should_not permit(:edit)}
+      it {should_not permit(:show)}
       it {should_not permit(:update)}
+      it {should_not permit(:settings)}
 
       it "should set permitted attributes" do
         expect(subject.permitted_attributes).to eq []
@@ -46,9 +50,9 @@ describe UserPolicy do
       let(:target_user) {actor}
       it {should permit(:new)}
       it {should permit(:create)}
-      it {should permit(:show)}
+      it {should_not permit(:show)}
       it {should_not permit(:destroy)}
-      it {should permit(:edit)}
+      it {should_not permit(:edit)}
       it {should permit(:update)}
 
       it "should show all users" do

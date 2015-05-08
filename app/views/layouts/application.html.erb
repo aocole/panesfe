@@ -67,7 +67,7 @@
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="#"><%=t 'nav.settings' %></a></li>
+                    <li><%=link_to t('nav.settings'), settings_path %></li>
                     <li class="divider"></li>
                     <li><%=link_to t('nav.logout'), destroy_user_session_path, method: :delete%></li>
                   </ul>

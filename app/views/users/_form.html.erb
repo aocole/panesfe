@@ -1,0 +1,117 @@
+<%= form_for @user, html: { class: "user form-horizontal" } do |f| %>
+
+  <% if @user.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :email, class: 'control-label col-sm-2' %>
+    <div class="col-sm-10">
+      <p class="form-control-static"><%= @user.email %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :given_name, class: 'control-label col-sm-2' %>
+    <div class="col-sm-10">
+      <%= f.text_field :given_name, class: 'form-control' %>
+    </div>
+    <%= error_span(@user[:given_name]) %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :family_name, class: 'control-label col-sm-2' %>
+    <div class="col-sm-10">
+      <%= f.text_field :family_name, class: 'form-control' %>
+    </div>
+    <%= error_span(@user[:family_name]) %>
+  </div>
+
+  <% if policy(@user).permitted_attributes.include?(:role) %>
+    <div class="form-group">
+      <%= label_tag User.human_attribute_name(:role), nil, class: 'control-label col-sm-2' %>
+      <div class="col-sm-10">
+        <% %w{user admin}.each do |role| %>
+          <div class="radio">
+            <%= content_tag :label do
+              [f.radio_button(:role, role), User.human_attribute_name("role/#{role}")].join.html_safe
+            end
+            %>
+          </div>
+        <% end %>
+      </div>
+      <%= error_span(@user[:role]) %>
+    </div>
+  <% end %>
+
+  <% if policy(@user).permitted_attributes.include?(:custom_disk_quota_mb) %>
+    <div class="form-group">
+      <%= f.label :custom_disk_quota_mb, class: 'control-label col-sm-2' %>
+      <div class="col-sm-10">
+
+        <div class="radio">
+          <label>
+            <input 
+              id="user_use_default_disk_quota" 
+              value="true"
+              name="user[use_default_disk_quota]" type="radio"
+              <% if @user.custom_disk_quota_mb.nil? -%>
+                checked="checked"
+              <% end -%>
+            />
+            <%=t 'controllers.users.use_default', default_quota: GrowingPanes.config['user']['default_disk_quota_mb'] %>
+          </label>
+        </div>
+
+        <div class="radio form-inline">
+          <label>
+            <input 
+              id="user_use_custom_disk_quota" 
+              value="false"
+              name="user[use_default_disk_quota]" type="radio"
+              <% if !@user.custom_disk_quota_mb.nil? -%>
+                checked="checked"
+              <% end -%>
+            />
+            <%=t 'controllers.users.use_custom' %>
+          </label>
+          <div class="input-group">
+            <%= f.number_field :custom_disk_quota_mb, min: 0, step: 1, class: 'form-control', disabled: !@user.custom_disk_quota_mb %>
+            <span class="input-group-addon">MB</span>
+          </div>
+        </div>
+
+      </div>
+      <%= error_span(@user[:custom_disk_quota_mb]) %>
+    </div>
+  <% end %>
+
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <%= f.submit t('helpers.links.save'), class: 'btn btn-primary' %>
+    <%= link_to t('.cancel', default: t("helpers.links.cancel")),
+          users_path, class: 'btn btn-default' %>
+  </div>
+</div>
+
+<% end %>
+
+<script>
+  $(function(){
+    $('input[type="radio"]').change(function(){
+      var checkbox = $('#user_use_default_disk_quota')
+      $('#user_custom_disk_quota_mb').prop('disabled', checkbox.is(':checked'))
+    })
+  })
+</script>
