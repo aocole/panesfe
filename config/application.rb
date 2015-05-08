@@ -23,5 +23,8 @@ module PanesfeRails
     config.to_prepare do
       Devise::SessionsController.skip_after_action :verify_authorized, :only => [:new, :create, :destroy]
     end
+
+    # Remove deprecation warning
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end
