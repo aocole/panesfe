@@ -52,7 +52,7 @@ RSpec.configure do |config|
 
   config.after(:all) do
     if Rails.env.test?
-      FileUtils.rm_rf(Dir["#{User::UPLOAD_BASE}/[^.]*"])
+      FileUtils.rm_rf(Dir["#{User.upload_base}/[^.]*"])
     end
   end
 end

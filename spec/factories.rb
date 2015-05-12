@@ -19,6 +19,10 @@ FactoryGirl.define do
     theme
     association :user, strategy: :build
   end
+
+  factory :slide do
+    association :user, strategy: :build
+  end
   
   factory :foldershow do
     name { Faker::Commerce.product_name }

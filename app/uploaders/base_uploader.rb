@@ -7,11 +7,16 @@ class BaseUploader < CarrierWave::Uploader::Base
   storage :file
   # storage :fog
 
+  def self.store_dir
+    raise "Can't get a store dir without an object to store."
+  end
+
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
     raise "Can't upload files for an unknown user!" unless model.user
-    return File.join(model.user.upload_dir, mounted_as.to_s, model.id.to_s)
+    @store_dir = File.join(model.user.upload_dir, mounted_as.to_s, model.id.to_s)
+    return @store_dir
   end
 
   QUOTA_FMT = "%.2f"

@@ -8,6 +8,11 @@ class GrowingPanes
 
     return @config
   end
+
+  def self.reload_config
+    @config = nil
+    config
+  end
 end
 
 GrowingPanes.config # initializes config
