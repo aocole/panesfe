@@ -76,6 +76,7 @@ gem 'delayed_job_active_record'
 gem 'rest-client'
 
 gem 'carrierwave'
+gem 'carrierwave-mimetype-fu'
 gem 'mini_magick'
 gem 'streamio-ffmpeg'
 gem 'jquery-ui-rails'

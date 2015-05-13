@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 class BaseUploader < CarrierWave::Uploader::Base
+  include CarrierWave::MimetypeFu
   before :cache, :check_quota
 
   # Choose what kind of storage to use for this uploader:

@@ -31,7 +31,7 @@ RSpec.describe Presentation do
       expect(foldershow.save).to be_falsy
       expect(foldershow.errors.keys).to eq [:folder_zip]
       
-      File.open(Rails.root.join('seed/folder_zips/demo01.zip')) do |f|
+      File.open(Rails.root.join('seed/folder_zips/hello_world.zip')) do |f|
         foldershow.folder_zip = f
       end
 
@@ -43,7 +43,7 @@ RSpec.describe Presentation do
     it "should require being either folder or slideshow" do
       pres = Presentation.new(user: FactoryGirl.build(:user), name: Faker::Commerce.product_name)
       expect(pres).not_to respond_to(:theme)
-      File.open(Rails.root.join('seed/folder_zips/demo01.zip')) do |f|
+      File.open(Rails.root.join('seed/folder_zips/hello_world.zip')) do |f|
         pres.folder_zip = f
       end
       expect(pres.foldershow?).to be_falsy

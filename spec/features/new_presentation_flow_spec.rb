@@ -16,7 +16,7 @@ describe "new presentation flow" do
     log_in_as user
     visit_expect new_foldershow_path
     fill_in('Name', with: Faker::Commerce.product_name)
-    attach_file('Folder zip', Rails.root.join('seed/folder_zips/demo01.zip'))
+    attach_file('Folder zip', Rails.root.join('seed/folder_zips/hello_world.zip'))
     click_button "Save"
     expect(page).to have_content "success"
   end
