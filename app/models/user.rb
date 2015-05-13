@@ -40,9 +40,9 @@ class User < ActiveRecord::Base
 
   def disk_used_b
     return 0 unless upload_eligible?
-    return 0 unless Dir.exist?(upload_dir)
+    return 0 unless Dir.exist?(absolute_upload_path)
     # gets usage in kb then calculates mb. User gets 4k credit for dir size
-    (`du -sb "#{upload_dir}"`.split("\t").first.to_i - 4.kilobytes).to_f
+    (`du -sb "#{absolute_upload_path}"`.split("\t").first.to_i - 4.kilobytes).to_f
   end
 
   def disk_used_mb
@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
   end
 
   def self.upload_base
-    File.join GrowingPanes.config['user']['upload_root_dir'], Rails.env
+    Rails.env
   end
 
   def upload_dir
@@ -71,8 +71,12 @@ class User < ActiveRecord::Base
     File.join(self.class.upload_base, "user_#{id}")
   end
 
+  def absolute_upload_path
+    File.join BaseUploader.root.call, upload_dir
+  end
+
   def ensure_upload_dir
-    FileUtils.mkdir_p(upload_dir)
+    FileUtils.mkdir_p(absolute_upload_path)
   end
 
   def upload_eligible?

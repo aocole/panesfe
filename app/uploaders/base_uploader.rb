@@ -19,6 +19,10 @@ class BaseUploader < CarrierWave::Uploader::Base
     return @store_dir
   end
 
+  def cache_dir
+    File.join(Rails.env, 'tmp_cache')
+  end
+
   QUOTA_FMT = "%.2f"
   def check_quota(new_file)
     file_size_mb = new_file.size.to_f/(1.megabyte)

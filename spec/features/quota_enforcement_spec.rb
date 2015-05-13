@@ -17,8 +17,6 @@ describe "quota enforcement" do
 
     expect{store_a_file}.not_to raise_error
     expect{store_a_file}.not_to raise_error
-    Rails.logger.debug "User's upload dir: "
-    Rails.logger.debug `ls -lR #{user.upload_dir}`
     expect(user.disk_available_mb).to be > 0
     expect(user.disk_available_mb).to be < 0.75
 

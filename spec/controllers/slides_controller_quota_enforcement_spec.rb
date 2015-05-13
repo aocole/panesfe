@@ -17,7 +17,7 @@ RSpec.describe SlidesController, :type => :controller do
     return ActionDispatch::Http::UploadedFile.new({
       :filename => 'cast-of-growing-pains.jpg',
       :type => 'image/jpeg',
-      :tempfile => Rails.root.join('seed/images/cast-of-growing-pains.jpg')
+      :tempfile => File.new(Rails.root.join('seed/images/cast-of-growing-pains.jpg'))
     })
   end
 end

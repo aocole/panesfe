@@ -67,7 +67,7 @@ RSpec.describe User do
     it "should recognize changes in disk usage" do
       before = quota_user.disk_available_b
       quota_user.ensure_upload_dir
-      FileUtils.cp(Rails.root.join('seed/images/cast-of-growing-pains.jpg'), quota_user.upload_dir)
+      FileUtils.cp(Rails.root.join('seed/images/cast-of-growing-pains.jpg'), quota_user.absolute_upload_path)
       expect(quota_user.disk_available_b).to be < before
     end
 
