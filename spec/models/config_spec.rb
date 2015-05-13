@@ -17,7 +17,7 @@ describe GrowingPanes do
     GrowingPanes.config['user']['upload_root_dir'] = '/whackyvalue'
     slide = FactoryGirl.build_stubbed(:slide)
     i = ImageUploader.new(slide)
-    expect(i.store_dir).to eq "#{Rails.env}/user_#{slide.user.id}/#{slide.id}"
+    expect(i.store_dir).to eq "#{GrowingPanes.config['user']['upload_url_prefix']}/#{Rails.env}/user_#{slide.user.id}/#{slide.id}"
     expect(i.root).to eq '/whackyvalue'
 
     expect{ImageUploader.store_dir}.to raise_error

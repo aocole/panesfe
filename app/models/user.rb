@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
   end
 
   def self.upload_base
-    Rails.env
+    File.join(GrowingPanes.config['user']['upload_url_prefix'], Rails.env)
   end
 
   def upload_dir
