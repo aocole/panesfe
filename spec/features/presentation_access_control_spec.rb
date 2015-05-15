@@ -72,8 +72,8 @@ describe "slideshow access control" do
       fill_in('Name', with: name)
       select(theme.name, from: 'Theme')
       click_button 'Save'
-      expect(current_path).to eq presentations_path
-      expect(page).to have_content name
+      expect(current_path).to match(/\/slideshows\/\d+\/edit/)
+      expect(find_field('Name').value).to eq name
     end
     
     it "should disallow actions on others slideshows" do

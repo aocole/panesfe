@@ -25,7 +25,7 @@ class SlideshowsController < ApplicationController
 
     respond_to do |format|
       if @slideshow.save
-        format.html { redirect_to presentations_path, notice: t('controllers.slideshows.created_flash') }
+        format.html { redirect_to edit_slideshow_path(@slideshow), notice: t('controllers.slideshows.created_flash') }
         format.json { render :show, status: :created, location: @slideshow }
       else
         format.html { render @slideshow.slideshow? ? :new : :new_folder }
