@@ -58,6 +58,12 @@ en:
       google_oauth2_login: Log in with Google
     themes:
       use_this_theme: Use this theme
+      explanation:
+        A <i>Theme</i> is a template that controls how a <i>Slideshow</i> presentation
+        displays its slides. Authoring new themes requires adhering to specific conventions
+        in order for the slides to be displayed properly. If you're just looking to make a
+        one-off custom HTML presentation for yourself, you probably want to make a
+        <i>Foldershow</i> rather than a Theme.
     static:
       oops: Oops!
       not_found: The page you requested could not be found.
