@@ -55,6 +55,10 @@ RSpec.configure do |config|
       FileUtils.rm_rf(Dir["#{File.join BaseUploader.root.call, User.upload_base}/[^.]*"])
     end
   end
+  config.before(:all) do
+    ENV['VIDEO_WALL_CONFIG_FILE'] = Rails.root.join('config/video_wall_config.ini.template').to_s
+    GrowingPanes.reload_config
+  end
 end
 
 require 'support/database_cleaner'
