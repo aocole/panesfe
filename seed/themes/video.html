@@ -65,6 +65,15 @@
         })
       });
 
+      // We need to periodically tell the back end that we're still
+      // alive and doing stuff so that this presentation doesn't get killed
+      function keepPlaying() {
+        if(!video.paused){
+          GrowingPanes.keepAlive();
+        }
+        window.setTimeout(keepPlaying, 8000)
+      }
+      keepPlaying();
     });
   </script>
 
