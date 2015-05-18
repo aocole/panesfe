@@ -15,7 +15,7 @@ RSpec.describe Presentation do
       slideshow.theme = FactoryGirl.build_stubbed(:theme)
       slideshow.user = FactoryGirl.build_stubbed(:user)
 
-      expect(slideshow.save).to be_truthy, slideshow.errors.full_messages.join
+      expect(slideshow.save).to be_truthy, slideshow.errors.full_messages.join(', ')
       expect(slideshow.slideshow?).to be_truthy
       expect(slideshow.foldershow?).to be_falsy
     end
@@ -35,9 +35,33 @@ RSpec.describe Presentation do
         foldershow.folder_zip = f
       end
 
-      expect(foldershow.save).to be_truthy, foldershow.errors.full_messages.join
+      expect(foldershow.save).to be_truthy, foldershow.errors.full_messages.join(', ')
       expect(foldershow.foldershow?).to be_truthy
       expect(foldershow.slideshow?).to be_falsy
+      expect(foldershow.find_index).to eq 'index.html'
+    end
+
+    it "should reject a malformed foldershow" do
+      user = FactoryGirl.create :user
+      show = FactoryGirl.build :foldershow, user: user
+      File.open(Rails.root.join('spec/fixtures/no_index_foldershow.zip')) do |f|
+        show.folder_zip = f
+      end
+
+      expect(show.save).to be_falsy
+      expect(show.errors.keys).to eq [:folder_zip]
+      expect(show.errors.full_messages.join(', ')).to include I18n.t('activerecord.errors.models.foldershow.attributes.folder_zip.no_index_found')
+    end
+
+    it "should accept a foldershow with nested index.html" do
+      user = FactoryGirl.create :user
+      show = FactoryGirl.build :foldershow, user: user
+      File.open(Rails.root.join('spec/fixtures/emojitron.zip')) do |f|
+        show.folder_zip = f
+      end
+
+      expect(show.save).to be_truthy
+      expect(show.find_index).to eq 'emojitron/index.html'
     end
 
     it "should require being either folder or slideshow" do
@@ -52,7 +76,7 @@ RSpec.describe Presentation do
       expect(pres.save).to be_falsy
       expect(pres.errors[:theme]).to be_truthy
       expect(pres.errors[:folder_zip]).to be_truthy
-      expect(pres.errors.full_messages.join).to include I18n.t('activerecord.errors.models.presentation.attributes.base.foldershow_xor_slideshow')
+      expect(pres.errors.full_messages.join(', ')).to include I18n.t('activerecord.errors.models.presentation.attributes.base.foldershow_xor_slideshow')
     end
   end
 

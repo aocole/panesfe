@@ -106,3 +106,7 @@ en:
           attributes:
             base:
               foldershow_xor_slideshow: must be either a slideshow or a foldershow, and not both
+        foldershow:
+          attributes:
+            folder_zip:
+              no_index_found: does not seem to contain an index.html file. Please review the guidelines.

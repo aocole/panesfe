@@ -52,7 +52,9 @@ class PresentationsController < ApplicationController
       end
     when Foldershow
       if params[:path].blank?
-        redirect_to path: 'index.html'
+        the_index = presentation.find_index
+        # TODO: need to mark this presentation as broken if index not found
+        redirect_to the_index ? {path: the_index} : next_presentations_url
         return
       end
       Zip::File.open(presentation.folder_zip.path) do |zipfile|
@@ -63,7 +65,7 @@ class PresentationsController < ApplicationController
           zip_entry.extract(tmpfile.path) { overwrite }
           send_file tmpfile.path, disposition: 'inline'
         else
-          render template: 'static/not_found'
+          render template: 'static/not_found', status: 404
         end
       end
     else
