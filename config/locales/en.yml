@@ -49,7 +49,7 @@ en:
       no_presentations: No presentations yet. <a href="%s">Create one?</a>
       panesd_offline: Could not connect to the video wall controller.
       presentation_pushed: Presentation pushed successfully
-      quota_available: "%{available} of %{total} disk space available."
+      quota_available: "%{available} of %{total} available."
     auth:
       not_authorized: You are not authorized to perform this action.
       login_required: You must log in to continue.

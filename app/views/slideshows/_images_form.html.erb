@@ -1,118 +1,116 @@
-<div id="fileupload">
-    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-    <div class="row fileupload-buttonbar">
-        <div class="col-lg-7">
-            <!-- The fileinput-button span is used to style the file input field as button -->
-            <span class="btn btn-success fileinput-button">
-                <i class="glyphicon glyphicon-plus"></i>
-                <span>Add files...</span>
-                <input type="file" name="files[]" multiple>
-            </span>
-            <!--button type="submit" class="btn btn-primary start">
-                <i class="glyphicon glyphicon-upload"></i>
-                <span>Start upload</span>
-            </button-->
-            <button type="reset" class="btn btn-warning cancel">
-                <i class="glyphicon glyphicon-ban-circle"></i>
-                <span>Cancel upload</span>
-            </button>
-            <!--button type="button" class="btn btn-danger delete">
-                <i class="glyphicon glyphicon-trash"></i>
-                <span>Delete</span>
-            </button>
-            <input type="checkbox" class="toggle"-->
-            <!-- The global file processing state -->
-            <span class="fileupload-process"></span>
-            <%=t 'controllers.presentations.quota_available', available: number_to_human_size(@slideshow.user.disk_available_mb.megabytes), total: number_to_human_size(@slideshow.user.disk_quota_mb.megabytes)%>
-        </div>
-        <!-- The global progress state -->
-        <div class="col-lg-5 fileupload-progress fade">
-            <!-- The global progress bar -->
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+<div class="row">
+    <div class="col-sm-offset-2 col-sm-10" id="fileupload">
+        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+        <div class="row fileupload-buttonbar">
+            <div class="col-lg-6">
+                <!-- The fileinput-button span is used to style the file input field as button -->
+                <span class="btn btn-success fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add files...</span>
+                    <input type="file" name="files[]" multiple>
+                </span>
+                <!--button type="submit" class="btn btn-primary start">
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start upload</span>
+                </button-->
+                <button type="reset" class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel upload</span>
+                </button>
+                <!--button type="button" class="btn btn-danger delete">
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>Delete</span>
+                </button>
+                <input type="checkbox" class="toggle"-->
+                <!-- The global file processing state -->
+                <span class="fileupload-process"></span>
+                <%=t 'controllers.presentations.quota_available', available: number_to_human_size(@slideshow.user.disk_available_mb.megabytes), total: number_to_human_size(@slideshow.user.disk_quota_mb.megabytes)%>
             </div>
-            <!-- The extended global progress state -->
-            <div class="progress-extended">&nbsp;</div>
+            <!-- The global progress state -->
+            <div class="col-lg-4 fileupload-progress fade">
+                <!-- The global progress bar -->
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                </div>
+                <!-- The extended global progress state -->
+                <div class="progress-extended">&nbsp;</div>
+            </div>
         </div>
     </div>
+</div>
+<div class="row" role="presentation" id="thumbnail_files" >
     <!-- The table listing the files available for upload/download -->
-    <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
 </div>
 
 
 <!-- The template to display files available for upload -->
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-upload fade">
-        <td>
+
+    <div class="col-sm-4 col-md-3 template-upload fade">
+        <div class="thumbnail">
             <span class="preview"></span>
-        </td>
-        <td>
-            <p class="name">{%=file.name%}</p>
-            <strong class="error text-danger"></strong>
-        </td>
-        <td>
-            <p class="size">Processing...</p>
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-        </td>
-        <td>
-            {% if (!i && !o.options.autoUpload) { %}
-                <button class="btn btn-primary start" disabled>
-                    <i class="glyphicon glyphicon-upload"></i>
-                    <span>Start</span>
-                </button>
-            {% } %}
-            {% if (!i) { %}
-                <button class="btn btn-warning cancel">
-                    <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span>Cancel</span>
-                </button>
-            {% } %}
-        </td>
-    </tr>
+            <div class="caption">
+                <p class="name"><span>{%=file.name%}</span></p>
+                <span class="error text-danger"></span>
+                <p class="size">Processing...</p>
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+                <p>
+                {% if (!i) { %}
+                    <button type="button" class="btn btn-warning cancel">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>Cancel</span>
+                    </button>
+                {% } %}
+                </p>
+            </div>
+        </div>
+    </div>
+
 {% } %}
 </script>
+
 <!-- The template to display files available for download -->
 <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-download fade">
-        <td>
-            <span class="preview">
-                {% if (file.thumbnailUrl) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-                {% } %}
-            </span>
-        </td>
-        <td>
-            <p class="name">
-                {% if (file.url) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-                {% } else { %}
-                    <span>{%=file.name%}</span>
-                {% } %}
-            </p>
-            {% if (file.error) { %}
-                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+
+
+    <div class="col-sm-4 col-md-3 template-download fade">
+        <div class="thumbnail">
+            {% if (file.thumbnailUrl) { %}
+                <!--a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery-->
+                <img src="{%=file.thumbnailUrl%}">
+                <!--/a-->
             {% } %}
-        </td>
-        <td>
-            <span class="size">{%=o.formatFileSize(file.size)%}</span>
-        </td>
-        <td>
-            {% if (file.deleteUrl) { %}
-                <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                    <i class="glyphicon glyphicon-trash"></i>
-                    <span>Delete</span>
-                </button>
-                <!--input type="checkbox" name="delete" value="1" class="toggle"-->
-            {% } else { %}
-                <button class="btn btn-warning cancel">
-                    <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span>Cancel</span>
-                </button>
-            {% } %}
-        </td>
-    </tr>
+            <div class="caption">
+                <p class="name">
+                    {% if (file.url) { %}
+                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                    {% } else { %}
+                        <span>{%=file.name%}</span>
+                    {% } %}
+                </p>
+                {% if (file.error) { %}
+                    <div><span class="label label-danger">Error</span><span class="error text-danger"> {%=file.error%}</span></div>
+                {% } %}
+                <p class="size">{%=o.formatFileSize(file.size)%}</p>
+                <p>
+                    {% if (file.deleteUrl) { %}
+                        <button type="button" class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                            <i class="glyphicon glyphicon-trash"></i>
+                            <span>Delete</span>
+                        </button>
+                        <!--input type="checkbox" name="delete" value="1" class="toggle"-->
+                    {% } else { %}
+                        <button type="button" class="btn btn-warning cancel">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                            <span>Cancel</span>
+                        </button>
+                    {% } %}                
+                </p>
+            </div>
+        </div>
+    </div>
 {% } %}
 </script>
 
@@ -182,17 +180,18 @@ $(function () {
                 action: 'checkDiskAvailable',
                 always: true
             }
-        ]
+        ],
+        filesContainer: $('#thumbnail_files')
     }).on('fileuploadadd', function (e, data) {
         data.context = $('<div/>').appendTo('#files');
         $.each(data.files, function (index, file) {
             var node = $('<p/>')
                     .append($('<span/>').text(file.name));
-            if (!index) {
-                node
-                    .append('<br>')
-                    .append(uploadButton.clone(true).data(data));
-            }
+            // if (!index) {
+            //     node
+            //         .append('<br>')
+            //         .append(uploadButton.clone(true).data(data));
+            // }
             node.appendTo(data.context);
         });
     }).on('fileuploadprocessalways', function (e, data) {
@@ -204,11 +203,11 @@ $(function () {
                 .prepend('<br>')
                 .prepend(file.preview);
         }
-        if (file.error) {
-            node
-                .append('<br>')
-                .append($('<span class="text-danger"/>').text(file.error));
-        }
+        // if (file.error) {
+        //     node
+        //         .append('<br>')
+        //         .append($('<span class="text-danger"/>').text(file.error));
+        // }
         if (index + 1 === data.files.length) {
             data.context.find('button')
                 .text('Upload')
@@ -232,6 +231,7 @@ $(function () {
                 var error = $('<span class="text-danger"/>').text(file.error);
                 $(data.context.children()[index])
                     .append('<br>')
+                    .append('<span class="label label-danger">Error</span> ')
                     .append(error);
             }
         });
@@ -240,6 +240,7 @@ $(function () {
             var error = $('<span class="text-danger"/>').text('File upload failed.');
             $(data.context.children()[index])
                 .append('<br>')
+                .append('<span class="label label-danger">Error</span> ')
                 .append(error);
         });
     }).prop('disabled', !$.support.fileInput)
