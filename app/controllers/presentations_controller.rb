@@ -48,7 +48,7 @@ class PresentationsController < ApplicationController
     when Slideshow
       respond_to do |format|
         format.html { render html: presentation.theme.content.html_safe }
-        format.json { render json: presentation.slides }
+        format.json { render json: presentation.slides.rank(:row_order) }
       end
     when Foldershow
       if params[:path].blank?

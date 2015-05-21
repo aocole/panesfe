@@ -1,6 +1,6 @@
 class SlidesController < ApplicationController
   before_action :set_slideshow_from_param, only: [:index, :new, :create]
-  before_action :set_slideshow_from_slide, only: [:show, :destroy]
+  before_action :set_slideshow_from_slide, only: [:show, :destroy, :update]
 
   def index
   end
@@ -50,6 +50,18 @@ class SlidesController < ApplicationController
 
   end
 
+  # This is only used to update row order
+  def update
+    @slide.row_order_position = slide_params[:row_order_position]
+    if @slide.save
+      render nothing: true
+    else
+      render json: {files: [{
+        error: @slide.errors.full_messages.join(" ")
+      }]}, status: 400
+    end
+  end
+
   private
 
   def set_slideshow_from_param
@@ -63,4 +75,7 @@ class SlidesController < ApplicationController
     authorize(@slideshow)
   end
 
+  def slide_params
+    params.require(:slide).permit(:id, :row_order_position)
+  end
 end

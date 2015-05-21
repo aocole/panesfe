@@ -53,10 +53,10 @@
       <tr>
         <td>
           <% if presentation.kind_of?(Slideshow) && 
-            presentation.slides.first &&
-            presentation.slides.first.image &&
-            presentation.slides.first.image.thumb %>
-            <%= link_to image_tag(presentation.slides.first.image.thumb.url), presentation_path(presentation) %>
+            presentation.slides.rank(:row_order).first &&
+            presentation.slides.rank(:row_order).first.image &&
+            presentation.slides.rank(:row_order).first.image.thumb %>
+            <%= link_to image_tag(presentation.slides.rank(:row_order).first.image.thumb.url), presentation_path(presentation) %>
           <% end %>
           <p><%= link_to presentation.name, presentation_path(presentation) %></p>
         </td>

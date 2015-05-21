@@ -2,6 +2,8 @@ class Slide < ActiveRecord::Base
   mount_uploader :image, ImageUploader
   belongs_to :slideshow
   has_one :user, through: :slideshow
+  include RankedModel
+  ranks :row_order, with_same: :slideshow_id
 
   def is_video?
     image.content_type == "application/mp4"

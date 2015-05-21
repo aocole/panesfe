@@ -16,4 +16,6 @@
 //= require turbolinks
 //= require_tree .
 //= require jquery-ui/widget
+//= require jquery-ui/sortable
+//= require jquery-ui/effect-highlight
 //= require fileupload.js

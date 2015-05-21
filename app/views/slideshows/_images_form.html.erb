@@ -47,7 +47,7 @@
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
 
-    <div class="col-sm-4 col-md-3 template-upload fade">
+    <div class="slide col-sm-4 col-md-3 template-upload fade">
         <div class="thumbnail">
             <span class="preview"></span>
             <div class="caption">
@@ -75,7 +75,7 @@
 {% for (var i=0, file; file=o.files[i]; i++) { %}
 
 
-    <div class="col-sm-4 col-md-3 template-download fade">
+    <div class="slide col-sm-4 col-md-3 template-download fade" data-slide-id="{%=file.id%}">
         <div class="thumbnail">
             {% if (file.thumbnailUrl) { %}
                 <!--a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery-->
@@ -259,6 +259,29 @@ $(function () {
     }).done(function (result) {
         $(this).fileupload('option', 'done')
             .call(this, $.Event('done'), {result: result});
+    });
+
+
+    $('#thumbnail_files').sortable({
+        items: '.slide',
+        cursor: 'move',
+        stop: function(e, ui) {
+            // highlight the row on drop to indicate an update
+            ui.item.effect('highlight', {}, 1000)
+        },
+        update: function(e, ui) {
+            var slide_id = ui.item.data('slide-id')
+            console.log(slide_id)
+            var position = ui.item.index()
+            $.ajax({
+                type: 'PUT',
+                url: <%=slide_path('_SLIDE_').to_json.html_safe -%>.replace('_SLIDE_', slide_id),
+                dataType: 'json',
+                data: { 
+                    slide: { row_order_position: position }
+                }
+            })
+        }
     });
 
 });

@@ -12,8 +12,8 @@
     <dt><strong><%= model_class.human_attribute_name(:folder_zip) %>:</strong></dt>
     <dd><%= @presentation.folder_zip %></dd>
   <% elsif @presentation.kind_of? Slideshow %>
-    <dt><strong><%= model_class.human_attribute_name(:images) %>:</strong></dt>
-    <dd><% @presentation.slides.each do |slide| %><%=image_tag slide.image.thumb.url%><% end %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:slides) %>:</strong></dt>
+    <dd><% @presentation.slides.rank(:row_order).each do |slide| %><%=image_tag slide.image.thumb.url%><% end %></dd>
   <% end %>
 
 </dl>
