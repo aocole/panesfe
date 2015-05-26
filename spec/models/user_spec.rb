@@ -33,12 +33,12 @@ RSpec.describe User do
     end
 
     it "should have a default quota" do
-      expect(user.disk_quota_mb).to eq(GrowingPanes.config['user']['default_disk_quota_mb'])
+      expect(user.disk_quota_mb).to eq(GrowingPanes.config['default_disk_quota_mb'])
       expect(user.disk_quota_mb).to be_a(Numeric)
     end
 
     it "can be customized per-user" do
-      expect(quota_user.disk_quota_mb).to eq(GrowingPanes.config['user']['default_disk_quota_mb'])
+      expect(quota_user.disk_quota_mb).to eq(GrowingPanes.config['default_disk_quota_mb'])
       custom = rand(1000)
       quota_user.custom_disk_quota_mb = custom
       expect(quota_user.disk_quota_mb).to eq custom

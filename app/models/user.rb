@@ -59,11 +59,14 @@ class User < ActiveRecord::Base
   end
 
   def disk_quota_mb
-    custom_disk_quota_mb || GrowingPanes.config['user']['default_disk_quota_mb']
+    custom_disk_quota_mb || GrowingPanes.config['default_disk_quota_mb']
   end
 
   def self.upload_base
-    File.join(GrowingPanes.config['user']['upload_url_prefix'], Rails.env)
+    if GrowingPanes.config['upload_url_prefix'].blank?
+      return Rails.env
+    end
+    File.join(GrowingPanes.config['upload_url_prefix'], Rails.env)
   end
 
   def upload_dir

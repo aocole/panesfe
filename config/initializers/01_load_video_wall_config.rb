@@ -1,11 +1,11 @@
 class GrowingPanes
   def self.config
     return @config if @config
-    config_file = ENV['VIDEO_WALL_CONFIG_FILE'] || Rails.root.join('config', 'video_wall_config.ini')
-    @config = IniFile.load(config_file)
+    config_file = ENV['VIDEO_WALL_CONFIG_FILE'] || '/etc/video_wall_config.json'
+    @config = JSON.parse(File.read(config_file))
 
     # Special handling for certain fields
-    @config['user']['upload_root_dir'] = File.expand_path(@config['user']['upload_root_dir'], Rails.root)
+    @config['upload_root_dir'] = File.expand_path(@config['upload_root_dir'], Rails.root)
 
     return @config
   end

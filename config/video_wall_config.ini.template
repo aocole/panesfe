@@ -1,9 +1,0 @@
-[user]
-default_disk_quota_mb=100
-
-; If this starts with a slash, it will be absolute, otherwise relative to Rails.root
-upload_root_dir=public/
-upload_url_prefix=uploads
-
-[system]
-panesfe_endpoint=http://localhost
