@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150520223134) do
+ActiveRecord::Schema.define(version: 20150622222031) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",               default: 0, null: false
@@ -65,24 +65,27 @@ ActiveRecord::Schema.define(version: 20150520223134) do
   add_index "themes", ["user_id"], name: "index_themes_on_user_id"
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                limit: 255, default: "", null: false
-    t.string   "given_name",           limit: 255
-    t.string   "family_name",          limit: 255
-    t.string   "uid",                  limit: 255
-    t.string   "provider",             limit: 255
+    t.string   "email",                   limit: 255, default: "", null: false
+    t.string   "given_name",              limit: 255
+    t.string   "family_name",             limit: 255
+    t.string   "uid",                     limit: 255
+    t.string   "provider",                limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "role",                             default: 0,  null: false
-    t.string   "encrypted_password",   limit: 255, default: "", null: false
+    t.integer  "role",                                default: 0,  null: false
+    t.string   "encrypted_password",      limit: 255, default: "", null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                    default: 0,  null: false
+    t.integer  "sign_in_count",                       default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",   limit: 255
-    t.string   "last_sign_in_ip",      limit: 255
+    t.string   "current_sign_in_ip",      limit: 255
+    t.string   "last_sign_in_ip",         limit: 255
     t.integer  "custom_disk_quota_mb"
+    t.integer  "card_number"
+    t.integer  "primary_presentation_id"
   end
 
+  add_index "users", ["card_number"], name: "index_users_on_card_number", unique: true
   add_index "users", ["email"], name: "index_users_on_email", unique: true
 
 end

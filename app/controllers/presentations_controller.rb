@@ -1,6 +1,6 @@
 class PresentationsController < ApplicationController
-  skip_after_action :verify_authorized, only: [:display, :next]
-  skip_before_action :authenticate_user!, only: [:display, :next]
+  skip_after_action :verify_authorized, only: [:display, :next, :card]
+  skip_before_action :authenticate_user!, only: [:display, :next, :card]
   before_action :set_presentation, only: [:show, :push, :edit, :update, :destroy]
 
   # This is needed to be able to download .js files from foldershows
@@ -27,6 +27,19 @@ class PresentationsController < ApplicationController
       return
     end
     redirect_to display_presentation_url(presentation)
+  end
+
+  # push whatever presentation is associated with given card id
+  def card
+    user = User.find_by_card_number(params[:card])
+    unless user
+      logger.error "No user registered with card number: #{params[:card]}"
+      render nothing: true
+      return
+    end
+    @presentation = user.primary_presentation || user.presentations.first
+    render(nothing: true) unless @presentation
+    push
   end
 
   def push

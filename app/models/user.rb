@@ -12,6 +12,10 @@ class User < ActiveRecord::Base
   validates :provider, presence: true
   validates :role, presence: true
 
+  has_many :presentations
+
+  belongs_to :primary_presentation, class_name: 'Presentation'
+
   enum role: {
     user: 0, 
     admin: 100, 
