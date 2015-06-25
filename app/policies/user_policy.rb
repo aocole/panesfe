@@ -30,7 +30,7 @@ class UserPolicy < ApplicationPolicy
     
     permitted = [:encrypted_password, :family_name, :given_name]
     if user.adminish?
-      permitted += [:custom_disk_quota_mb]
+      permitted += [:custom_disk_quota_mb, :card_number]
       if record != user
         permitted += [:role]
       end

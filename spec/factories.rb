@@ -7,6 +7,7 @@ FactoryGirl.define do
     provider 'google_oauth2'
     given_name { Faker::Name.first_name }
     family_name { Faker::Name.last_name }
+    card_number { Faker::Number.number(6) }
   end
 
   factory :theme do

@@ -38,6 +38,18 @@
     <%= error_span(@user[:family_name]) %>
   </div>
 
+  <div class="form-group">
+    <%= f.label :card_number, class: 'control-label col-sm-2' %>
+    <div class="col-sm-10">
+      <% if policy(@user).permitted_attributes.include?(:card_number) %>
+        <%= f.number_field :card_number, class: 'form-control' %>
+      <% else %>
+        <p class="form-control-static"><%= @user.card_number %></p>
+      <% end %>
+    </div>
+    <%= error_span(@user[:card_number]) %>
+  </div>
+
   <% if policy(@user).permitted_attributes.include?(:role) %>
     <div class="form-group">
       <%= label_tag User.human_attribute_name(:role), nil, class: 'control-label col-sm-2' %>

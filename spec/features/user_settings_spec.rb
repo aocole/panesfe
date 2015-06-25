@@ -26,7 +26,9 @@ describe "User settings" do
       visit_expect settings_path
       expect(page).to have_field('Given name', with: user.given_name)
       expect(page).to have_field('Family name', with: user.family_name)
+      expect(page).to have_text(user.card_number)
       expect(page).not_to have_field('user[role]')
+      expect(page).not_to have_field('user[card_number]')
       expect(page).not_to have_field('user[custom_disk_quota_mb]')
       expect(page).not_to have_text('Role')
       expect(page).not_to have_text('Quota')
@@ -43,6 +45,7 @@ describe "User settings" do
  
       expect(page).to have_field('Given name', with: admin.given_name)
       expect(page).to have_field('Family name', with: admin.family_name)
+      expect(page).to have_field('Card number', with: admin.card_number)
       expect(page).not_to have_field('user[role]')
       expect(page).to have_checked_field('Use default')
       expect(find('input#user_custom_disk_quota_mb')).to be_disabled
@@ -53,6 +56,7 @@ describe "User settings" do
       fill_in('Family name', with: 'Loblaw')
       choose('Custom')
       fill_in('user_custom_disk_quota_mb', with: 1337)
+      fill_in('Card number', with: 7331)
 
 
       click_link_or_button 'Save'
@@ -61,6 +65,7 @@ describe "User settings" do
       visit_expect settings_path
       expect(page).to have_field('Given name', with: "Bob")
       expect(page).to have_field('Family name', with: "Loblaw")
+      expect(page).to have_field('Card number', with: 7331)
       expect(page).to have_checked_field('Custom')
       expect(page).to have_field('user_custom_disk_quota_mb', with: 1337)
 
