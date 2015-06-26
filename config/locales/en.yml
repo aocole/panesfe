@@ -104,6 +104,8 @@ en:
       models:
         presentation:
           attributes:
+            primary_presentation_id:
+              must_belong_to_user: must belong to the user trying to set presentation as primary
             base:
               foldershow_xor_slideshow: must be either a slideshow or a foldershow, and not both
         foldershow:

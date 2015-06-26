@@ -22,7 +22,7 @@ describe UserPolicy do
       end
 
       it "should set permitted attributes" do
-        expect(subject.permitted_attributes).to eq [:encrypted_password, :family_name, :given_name]
+        expect(subject.permitted_attributes).to eq [:encrypted_password, :family_name, :given_name, :primary_presentation_id]
       end
     end
 
@@ -61,7 +61,7 @@ describe UserPolicy do
       end
 
       it "should set permitted attributes" do
-        expect(subject.permitted_attributes).to eq [:encrypted_password, :family_name, :given_name, :custom_disk_quota_mb, :card_number]
+        expect(subject.permitted_attributes).to eq [:encrypted_password, :family_name, :given_name, :primary_presentation_id, :custom_disk_quota_mb, :card_number]
       end
 
     end
@@ -76,7 +76,7 @@ describe UserPolicy do
       it {should permit(:update)}
 
       it "should set permitted attributes" do
-        expect(subject.permitted_attributes).to eq [:encrypted_password, :family_name, :given_name, :custom_disk_quota_mb, :card_number, :role]
+        expect(subject.permitted_attributes).to eq [:encrypted_password, :family_name, :given_name, :primary_presentation_id, :custom_disk_quota_mb, :card_number, :role]
       end
 
     end

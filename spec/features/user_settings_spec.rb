@@ -8,24 +8,28 @@ describe "User settings" do
       log_in_as user
     end
 
-    it "should have working name fields" do
+    it "should have working fields" do
+      FactoryGirl.create_list(:slideshow, 4, user: user)
       visit_expect(logged_in_home_path)
       click_link "Settings"
       expect(current_path).to eq settings_path
       fill_in('Given name', with: 'Bob')
       fill_in('Family name', with: 'Loblaw')
+      select(user.presentations[2].name, from: 'Primary presentation')
       click_link_or_button 'Save'
       expect(current_path).to eq logged_in_home_path
       expect(page).to have_xpath '//div[contains(@class,"alert-success")]'
       visit_expect settings_path
       expect(page).to have_field('Given name', with: "Bob")
       expect(page).to have_field('Family name', with: "Loblaw")
+      expect(page).to have_select('Primary presentation', selected: user.presentations[2].name)
     end
 
     it "Should only show certain fields" do
       visit_expect settings_path
       expect(page).to have_field('Given name', with: user.given_name)
       expect(page).to have_field('Family name', with: user.family_name)
+      expect(page).to have_select('Primary presentation')
       expect(page).to have_text(user.card_number)
       expect(page).not_to have_field('user[role]')
       expect(page).not_to have_field('user[card_number]')

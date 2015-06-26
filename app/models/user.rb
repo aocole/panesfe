@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   validates :uid, presence: true, uniqueness: true
   validates :provider, presence: true
   validates :role, presence: true
+  validate :primary_presentation_belongs_to_user
 
   has_many :presentations
 
@@ -28,6 +29,12 @@ class User < ActiveRecord::Base
 
   def videowall?
     false
+  end
+
+  def primary_presentation_belongs_to_user
+    if primary_presentation && primary_presentation.user.id != self.id 
+      errors.add(:primary_presentation_id, :must_belong_to_user)
+    end
   end
 
   def self.find_or_create_with_omniauth(auth)

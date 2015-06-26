@@ -28,7 +28,7 @@ class UserPolicy < ApplicationPolicy
   def permitted_attributes
     return [] unless admin_or_owner?
     
-    permitted = [:encrypted_password, :family_name, :given_name]
+    permitted = [:encrypted_password, :family_name, :given_name, :primary_presentation_id]
     if user.adminish?
       permitted += [:custom_disk_quota_mb, :card_number]
       if record != user
