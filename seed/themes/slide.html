@@ -57,6 +57,24 @@
       })
 
       $('#slides').on('animating.slides', onAnimating);
+
+
+      // Following section adds support for the presentation-mode "clicker" buttons
+      $(document).on('slideNext', function(){
+        $('#slides').superslides('animate', 'next')
+      })
+      $(document).on('slidePrev', function(){
+        $('#slides').superslides('animate', 'prev')
+      })
+      var togglePauseCount = 0
+      $(document).on('slideTogglePause', function(){
+        if (togglePauseCount % 2 == 0) {
+          $('#slides').superslides('stop')
+        } else {
+          $('#slides').superslides('start')
+        }
+        togglePauseCount++
+      })
     });
   </script>
 
