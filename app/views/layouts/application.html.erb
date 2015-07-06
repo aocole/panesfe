@@ -50,6 +50,9 @@
             <ul class="nav navbar-nav">
               <% if current_user %>
                 <li><%= link_to Theme.model_name.human.pluralize, themes_path  %></li>
+                <% if policy(:global_settings).edit? %>
+                  <li><%= link_to t('controllers.settings.edit.title'), global_settings_path  %></li>
+                <% end %>
               <% end %>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -81,7 +84,12 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
+            <% cache('interactive_mode_warning', expires_in: 1.minute) do %>
+              <%= interactive_mode_warning %>
+            <% end %>
+            
             <%= bootstrap_flash(class: 'alert-dismissible').gsub('<button class="close" ', '<button type="button" class="close" ').html_safe %>
+            
             <%= yield %>
           </div>
         </div><!--/row-->

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'global_settings', to: 'global_settings#edit', as: 'global_settings'
+  post 'global_settings', to: 'global_settings#update'
+
   devise_for :users, controllers: {
     omniauth_callbacks: 'auth'
   }

@@ -12,6 +12,20 @@ class Panesd
     return true
   end
 
+  def self.status
+    resp = RestClient::Request.execute method: :get, url: API_BASE + '/status', timeout: 2
+    return resp.body
+  end
+
+  def self.interactive_on
+    RestClient::Request.execute method: :get, url: API_BASE + '/interactive/on', timeout: 10
+  end
+
+  def self.interactive_off
+    RestClient::Request.execute method: :get, url: API_BASE + '/interactive/off', timeout: 10
+  end
+
+
   private
 
   def logger
