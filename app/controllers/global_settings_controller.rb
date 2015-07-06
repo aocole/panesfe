@@ -11,6 +11,7 @@ class GlobalSettingsController < ApplicationController
     else
       Panesd.interactive_off
     end
+    expire_fragment 'interactive_mode_warning'
     redirect_to logged_in_home_path
   end
 
