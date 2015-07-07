@@ -84,9 +84,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
-            <% cache('interactive_mode_warning') do %>
-              <%= interactive_mode_warning %>
-            <% end %>
+            <%= interactive_mode_warning %>
             
             <%= bootstrap_flash(class: 'alert-dismissible').gsub('<button class="close" ', '<button type="button" class="close" ').html_safe %>
             
