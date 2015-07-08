@@ -46,12 +46,12 @@ describe "slideshow access control" do
       expect(page).to have_content(user_slideshow.name)
     end
 
-    it "should go back from show slideshow" do
+    it "should preview from show slideshow" do
       log_in_as user
       user_slideshow = FactoryGirl.create(:slideshow, user: user)
       visit_expect(presentation_path(user_slideshow))
-      click_link_or_button('Back')
-      expect(current_path).to eq(presentations_path)
+      click_link_or_button('Preview')
+      expect(current_path).to eq(preview_presentation_path(user_slideshow))
     end
     
     it "should delete from show slideshow" do
@@ -132,8 +132,8 @@ describe "foldershow access control" do
       log_in_as user
       user_foldershow = FactoryGirl.create(:foldershow, user: user)
       visit_expect(presentation_path(user_foldershow))
-      click_link_or_button('Back')
-      expect(current_path).to eq(presentations_path)
+      click_link_or_button('Preview')
+      expect(current_path).to eq(preview_presentation_path(user_foldershow))
     end
     
     it "should delete from show foldershow" do

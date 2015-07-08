@@ -35,7 +35,7 @@ class PresentationsController < ApplicationController
   def card
     user = User.find_by_card_number(params[:card])
     unless user
-      logger.error "No user registered with card number: #{params[:card]}"
+      logger.warn "No user registered with card number: #{params[:card]}"
       render nothing: true
       return
     end
@@ -57,19 +57,27 @@ class PresentationsController < ApplicationController
   end
 
   # GET /presentations/1/display
-  def display
+  def display(previewing=false)
     presentation = Presentation.find_by_id!(params[:id])
+    authorize presentation if previewing
     case presentation
     when Slideshow
       respond_to do |format|
-        format.html { render html: presentation.theme.content.html_safe }
+        format.html do
+          content = presentation.theme.content
+          if previewing
+            content = content.sub('</body>',
+              '<script src="/javascripts/growingpanes.js"></script></body>')
+          end
+          render html: content.html_safe
+        end
         format.json { render json: presentation.slides.rank(:row_order) }
       end
     when Foldershow
       if params[:path].blank?
         the_index = presentation.find_index
         # TODO: need to mark this presentation as broken if index not found
-        redirect_to the_index ? {path: the_index} : next_presentations_url
+        redirect_to the_index ? {path: the_index, trailing_slash: previewing} : next_presentations_url
         return
       end
       Zip::File.open(presentation.folder_zip.path) do |zipfile|
@@ -86,6 +94,10 @@ class PresentationsController < ApplicationController
     else
       raise "Don't know how to display #{presentation.inspect}"
     end
+  end
+
+  def preview
+    display(true)
   end
 
   # DELETE /presentations/1

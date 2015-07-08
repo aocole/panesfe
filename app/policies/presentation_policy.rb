@@ -1,11 +1,11 @@
 class PresentationPolicy < ApplicationPolicy
 
-  def push?
-    user.adminish?
+  def preview?
+    show?
   end
 
-  def display?
-    user.videowall?
+  def push?
+    user.adminish?
   end
 
   class Scope < Scope
@@ -13,7 +13,7 @@ class PresentationPolicy < ApplicationPolicy
     def resolve
       if user.user?
         scope.where(user: user)
-      elsif user.adminish? || user.videowall?
+      elsif user.adminish?
         scope.all
       else
         raise "Don't know what to do with this user! #{user.inspect}"

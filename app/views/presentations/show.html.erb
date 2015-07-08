@@ -10,7 +10,7 @@
   <dd><%= @presentation.published %></dd> -->
   <% if @presentation.kind_of? Foldershow %>
     <dt><strong><%= model_class.human_attribute_name(:folder_zip) %>:</strong></dt>
-    <dd><%= @presentation.folder_zip %></dd>
+    <dd><%= @presentation.folder_zip.to_s.split('/').last %></dd>
   <% elsif @presentation.kind_of? Slideshow %>
     <dt><strong><%= model_class.human_attribute_name(:slides) %>:</strong></dt>
     <dd><% @presentation.slides.rank(:row_order).each do |slide| %><%=image_tag slide.image.thumb.url%><% end %></dd>
@@ -18,8 +18,8 @@
 
 </dl>
 
-<%= link_to t('.back', :default => t("helpers.links.back")),
-              presentations_path, :class => 'btn btn-default'  %>
+<%= link_to t('.preview', :default => t("helpers.links.preview")),
+              preview_presentation_path(@presentation), :class => 'btn btn-default', target: '_blank'  %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_presentation_path(@presentation), :class => 'btn btn-default' %>
 <%= link_to t('.destroy', :default => t("helpers.links.destroy")),

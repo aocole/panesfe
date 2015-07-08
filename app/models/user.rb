@@ -27,10 +27,6 @@ class User < ActiveRecord::Base
     admin? || superuser?
   end
 
-  def videowall?
-    false
-  end
-
   def primary_presentation_belongs_to_user
     if primary_presentation && primary_presentation.user.id != self.id 
       errors.add(:primary_presentation_id, :must_belong_to_user)
