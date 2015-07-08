@@ -47,7 +47,7 @@ en:
         custom HTML, CSS, images, and other assets that can utilize the full capabilities of
         the video wall.
       no_presentations: No presentations yet. <a href="%s">Create one?</a>
-      panesd_offline: Could not connect to the video wall controller.
+      panesd_offline: Could not connect to the video wall controller. The system will not function properly in this state.
       presentation_pushed: Presentation pushed successfully
       quota_available: "%{available} of %{total} available."
     auth:

@@ -12,6 +12,8 @@ class GlobalSettingsController < ApplicationController
       Panesd.interactive_off
     end
     redirect_to logged_in_home_path
+  rescue Errno::ECONNREFUSED
+    redirect_to global_settings_path
   end
 
 end

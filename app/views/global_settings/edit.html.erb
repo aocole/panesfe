@@ -1,3 +1,12 @@
+<%
+@interactive_mode = begin
+  interactive_mode?
+rescue Errno::ECONNREFUSED
+  nil
+end
+
+%>
+
 <div class="page-header">
   <h1><%=t 'controllers.settings.edit.title' %> <small><%=t 'controllers.settings.edit.hint' %></small></h1>
 </div>
@@ -6,7 +15,7 @@
     <div class="col-sm-offset-2 col-sm-10">
     	<div class="checkbox">
 			<label>
-		      <%= check_box_tag :interactive_mode, "1", interactive_mode? %>
+		      <%= check_box_tag :interactive_mode, "1", @interactive_mode, disabled: @interactive_mode.nil? %>
 			  <%= t('controllers.settings.interactive_mode') %>
 			</label>
 		</div>
