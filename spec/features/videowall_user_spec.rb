@@ -18,51 +18,53 @@ describe "Display methods access control" do
       
   context 'with no presentations' do
     it 'should not display an error getting next' do
-      expect {visit(next_presentations_path)}.not_to raise_error
+      expect {visit next_presentations_url(host: 'localhost')}.not_to raise_error
       expect(page).not_to have_content 'wrong'
     end
   end
 
   context 'when videowall authenticated' do
     it "should display a slideshow" do
-      visit_expect(display_presentation_path(user_slideshow))
+      visit display_presentation_url(user_slideshow, host: 'localhost')
+      expect(current_path).to eq display_presentation_path(user_slideshow)
       expect(page).to have_content theme_name
     end
 
     it "should display a foldershow" do
-      visit(display_presentation_path(user_foldershow))
+      visit display_presentation_url(user_foldershow, host: 'localhost')
       expect(current_path).to eq display_presentation_path_path(user_foldershow, 'index.html')
       expect(page).to have_content 'Hello, world!'
     end
 
     it "should display a foldershow subpath" do
-      visit_expect display_presentation_path_path(user_foldershow, 'css/bootstrap.min.css')
+      visit display_presentation_path_url(user_foldershow, 'css/bootstrap.min.css', host: 'localhost')
+      expect(current_path).to eq display_presentation_path_path(user_foldershow, 'css/bootstrap.min.css')
       expect(page).to have_content 'Bootstrap v3.3.4 (http://getbootstrap.com)'
     end
 
     it "should display a foldershow javascript subpath" do
-      visit_expect display_presentation_path_path(user_foldershow, 'js/hello.js')
+      visit display_presentation_path_url(user_foldershow, 'js/hello.js', host: 'localhost')
+      expect(current_path).to eq display_presentation_path_path(user_foldershow, 'js/hello.js')
       expect(page).to have_content 'var foo'
     end
 
     it "should display 404 for nonexistant foldershow subpath" do
-      visit_expect display_presentation_path_path(user_foldershow, 'adfgjkdfgjkhasdfg')
+      visit display_presentation_path_url(user_foldershow, 'adfgjkdfgjkhasdfg', host: 'localhost')
+      expect(current_path).to eq display_presentation_path_path(user_foldershow, 'adfgjkdfgjkhasdfg')
       expect(page).to have_content 'The page you requested could not be found.'
     end
   end
 
   context 'when not videowall authenticated' do
-    it "should not allow completely unauthenticated user to display presentation" do
-      skip "Need to revisit access control for 'display' methods"
-      visit_expect(display_presentation_path(user_slideshow))
+    it "should not allow completely unauthenticated internet user to display presentation" do
+      visit(display_presentation_url(user_slideshow, host: 'notlocalhost.com'))
       expect(page).to have_content "You need to log in"
     end
 
-    it "should not allow regular user to display presentation" do
-      skip "Need to revisit access control for 'display' methods"
+    it "should not allow regular internet user to display presentation" do
       log_in_as(user)
-      visit_expect(display_presentation_path(user_slideshow))
-      expect(page).to have_content I18n.t('controllers.auth.not_authorized')
+      visit(display_presentation_url(user_slideshow, host: 'notlocalhost.com'))
+      expect(page).to have_content "You need to log in"
     end
   end
 

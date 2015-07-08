@@ -1,6 +1,8 @@
 class PresentationsController < ApplicationController
-  skip_after_action :verify_authorized, only: [:display, :next, :card]
-  skip_before_action :authenticate_user!, only: [:display, :next, :card]
+  PANESD_METHODS = [:display, :next, :card]
+  skip_after_action :verify_authorized, only: PANESD_METHODS
+  skip_before_action :authenticate_user!, only: PANESD_METHODS
+  before_action :verify_localhost, only: PANESD_METHODS
   before_action :set_presentation, only: [:show, :push, :edit, :update, :destroy]
 
   # This is needed to be able to download .js files from foldershows
@@ -97,9 +99,16 @@ class PresentationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_presentation
-      @presentation = policy_scope(Presentation).find_by_id!(params[:id])
-      authorize @presentation
-    end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_presentation
+    @presentation = policy_scope(Presentation).find_by_id!(params[:id])
+    authorize @presentation
+  end
+
+  def verify_localhost
+    return true if request.host == 'localhost'
+    user_not_authorized
+    return false
+  end
 end
