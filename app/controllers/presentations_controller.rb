@@ -21,7 +21,7 @@ class PresentationsController < ApplicationController
 
   def mark_broken
     message = params[:message].to_s
-    unless Presentation::BROKEN_MESSAGE.keys.include?(message)
+    unless Presentation::BROKEN_MESSAGE_KEYS.include?(message)
       render(status: :bad_request, plain: "Invalid message")
       return
     end

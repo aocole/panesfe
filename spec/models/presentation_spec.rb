@@ -89,16 +89,15 @@ RSpec.describe Presentation do
       
       # should be able to use string
       expect{show.mark_broken!('no_index_found')}.not_to raise_error
-      expect(show.broken_message).to eq Presentation::BROKEN_MESSAGE[:no_index_found]
+      expect(show.broken_message_keys).to eq %W{no_index_found}
       
-      # should be able to use symbol
-      expect{show.mark_broken!(:no_index_found)}.not_to raise_error
-      expect(show.broken_message).to eq Presentation::BROKEN_MESSAGE[:no_index_found]
+      # should not be able to use symbol
+      expect{show.mark_broken!(:no_index_found)}.to raise_error
     end
 
     it "should have translations for all broken messages" do
-      Presentation::BROKEN_MESSAGE.values.each do |translation_key|
-        expect{I18n.t!(translation_key, raise: true)}.not_to raise_error, "Should have translation for #{translation_key}"
+      Presentation::BROKEN_MESSAGE_KEYS.each do |translation_key|
+        expect{I18n.t!(Presentation.broken_message_to_i18n_key(translation_key), raise: true)}.not_to raise_error, "Should have translation for #{translation_key}"
       end
     end
   end

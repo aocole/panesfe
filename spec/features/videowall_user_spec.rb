@@ -59,7 +59,7 @@ describe "Display methods access control" do
       expect(current_path).to eq mark_broken_presentation_path(user_slideshow)
       expect(status_code).to eq 204
       user_slideshow.reload
-      expect(user_slideshow.broken_message).to eq Presentation::BROKEN_MESSAGE[:no_index_found]
+      expect(user_slideshow.broken_message_keys).to eq %W{no_index_found}
     end
   end
 

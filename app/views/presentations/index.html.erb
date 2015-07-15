@@ -44,13 +44,14 @@
       <th><%= model_class.human_attribute_name(:name) %></th>
 <!--       <th><%= model_class.human_attribute_name(:published) %></th> -->
       <%if @presentations.any?{|p|p.user != current_user}%><th><%= model_class.human_attribute_name(:user_id) %></th><%end%>
+      <th><%=t "helpers.notes" %></th>
       <th><%= model_class.human_attribute_name(:updated_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @presentations.each do |presentation| %>
-      <tr>
+      <tr class="<%= presentation.broken_messages? ? 'danger' : ''%>">
         <td>
           <% if presentation.kind_of?(Slideshow) && 
             presentation.slides.rank(:row_order).first &&
@@ -62,6 +63,7 @@
         </td>
 <!--         <td><%= presentation.published %></td> -->
       <%if @presentations.any?{|p|p.user != current_user}%><td><%= presentation.user.email %></td><%end%>
+        <td class="<%= presentation.broken_messages? ? 'text-danger' : ''%>"><%if presentation.broken_messages?%><%= full_broken_messages(presentation) %><%end%></td>
         <td><%=time_tag presentation.updated_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),

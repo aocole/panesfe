@@ -109,6 +109,10 @@ en:
     errors:
       models:
         presentation:
+          broken_message: 
+            no_index_found: The system could not find an index.html file in the folder zip.
+            slide_timeout: One or more slides failed to advance before the slide timeout was triggered.
+            presentation_timeout: The presentation failed to signal its end before the presentation timeout was triggered.
           attributes:
             primary_presentation_id:
               must_belong_to_user: must belong to the user trying to set presentation as primary

@@ -9,6 +9,7 @@ en:
       pages: Pages
   helpers:
     actions: Actions
+    notes: Notes
     links:
       back: Back
       cancel: Cancel
