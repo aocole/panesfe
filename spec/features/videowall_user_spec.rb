@@ -53,6 +53,14 @@ describe "Display methods access control" do
       expect(current_path).to eq display_presentation_path_path(user_foldershow, 'adfgjkdfgjkhasdfg')
       expect(page).to have_content 'The page you requested could not be found.'
     end
+
+    it "should mark presentation as broken" do
+      visit mark_broken_presentation_url(user_slideshow, host: 'localhost', message: 'no_index_found')
+      expect(current_path).to eq mark_broken_presentation_path(user_slideshow)
+      expect(status_code).to eq 204
+      user_slideshow.reload
+      expect(user_slideshow.broken_message).to eq Presentation::BROKEN_MESSAGE[:no_index_found]
+    end
   end
 
   context 'when not videowall authenticated' do
@@ -64,6 +72,12 @@ describe "Display methods access control" do
     it "should not allow regular internet user to display presentation" do
       log_in_as(user)
       visit(display_presentation_url(user_slideshow, host: 'notlocalhost.com'))
+      expect(page).to have_content "You need to log in"
+    end
+
+    it "should not allow regular internet user to mark presentation broken" do
+      log_in_as(user)
+      visit(mark_broken_presentation_url(user_slideshow, host: 'notlocalhost.com'))
       expect(page).to have_content "You need to log in"
     end
   end

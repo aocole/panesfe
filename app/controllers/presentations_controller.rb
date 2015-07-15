@@ -1,5 +1,5 @@
 class PresentationsController < ApplicationController
-  PANESD_METHODS = [:display, :next, :card]
+  PANESD_METHODS = [:display, :next, :card, :mark_broken]
   skip_after_action :verify_authorized, only: PANESD_METHODS
   skip_before_action :authenticate_user!, only: PANESD_METHODS
   before_action :verify_localhost, only: PANESD_METHODS
@@ -17,6 +17,18 @@ class PresentationsController < ApplicationController
   # GET /presentations/1
   # GET /presentations/1.json
   def show
+  end
+
+  def mark_broken
+    message = params[:message].to_s
+    unless Presentation::BROKEN_MESSAGE.keys.include?(message)
+      render(status: :bad_request, plain: "Invalid message")
+      return
+    end
+
+    presentation = Presentation.find_by_id!(params[:id])
+    presentation.mark_broken!(message)
+    render(nothing: true, status: :no_content)
   end
 
   # TODO: this could be improved to better "randomize" the selection by 
@@ -74,12 +86,18 @@ class PresentationsController < ApplicationController
         format.json { render json: presentation.slides.rank(:row_order) }
       end
     when Foldershow
+
       if params[:path].blank?
         the_index = presentation.find_index
-        # TODO: need to mark this presentation as broken if index not found
-        redirect_to the_index ? {path: the_index, trailing_slash: previewing} : next_presentations_url
+        if the_index
+          redirect_to path: the_index, trailing_slash: previewing
+        else
+          presentation.mark_broken!(:no_index_found)
+          redirect_to next_presentations_url
+        end
         return
       end
+
       Zip::File.open(presentation.folder_zip.path) do |zipfile|
         tmpfile = Tempfile.new(["presentation_#{presentation.id}_", File.extname(params[:path])])
         overwrite = true # Need this so Rubyzip will write overwrite the (empty) new tmpfile
@@ -91,6 +109,7 @@ class PresentationsController < ApplicationController
           render template: 'static/not_found', status: 404
         end
       end
+
     else
       raise "Don't know how to display #{presentation.inspect}"
     end

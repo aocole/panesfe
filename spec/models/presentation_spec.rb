@@ -78,6 +78,29 @@ RSpec.describe Presentation do
       expect(pres.errors[:folder_zip]).to be_truthy
       expect(pres.errors.full_messages.join(', ')).to include I18n.t('activerecord.errors.models.presentation.attributes.base.foldershow_xor_slideshow')
     end
+
+    it "should be able to mark as broken" do
+      user = FactoryGirl.create :user
+      show = FactoryGirl.build :foldershow, user: user
+      File.open(Rails.root.join('spec/fixtures/emojitron.zip')) do |f|
+        show.folder_zip = f
+      end
+      expect(show.save).to be_truthy
+      
+      # should be able to use string
+      expect{show.mark_broken!('no_index_found')}.not_to raise_error
+      expect(show.broken_message).to eq Presentation::BROKEN_MESSAGE[:no_index_found]
+      
+      # should be able to use symbol
+      expect{show.mark_broken!(:no_index_found)}.not_to raise_error
+      expect(show.broken_message).to eq Presentation::BROKEN_MESSAGE[:no_index_found]
+    end
+
+    it "should have translations for all broken messages" do
+      Presentation::BROKEN_MESSAGE.values.each do |translation_key|
+        expect{I18n.t!(translation_key, raise: true)}.not_to raise_error, "Should have translation for #{translation_key}"
+      end
+    end
   end
 
 end

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get 'next', on: :collection
     get 'push', on: :member
     get 'preview', on: :member
+    get 'mark_broken', on: :member
   end
   get 'presentations/:id/display/*path', to: 'presentations#display', format: false, as: 'display_presentation_path'
   get 'presentations/:id/preview/*path', to: 'presentations#display', format: false, as: 'display_preview_path'

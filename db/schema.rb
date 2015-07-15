@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150622222031) do
+ActiveRecord::Schema.define(version: 20150709182008) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",               default: 0, null: false
@@ -30,14 +30,15 @@ ActiveRecord::Schema.define(version: 20150622222031) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
   create_table "presentations", force: :cascade do |t|
-    t.string   "name",       limit: 255,                       null: false
-    t.boolean  "published",              default: false,       null: false
-    t.integer  "user_id",                                      null: false
+    t.string   "name",           limit: 255,                       null: false
+    t.boolean  "published",                  default: false,       null: false
+    t.integer  "user_id",                                          null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "theme_id"
-    t.string   "folder_zip", limit: 255
-    t.string   "type",       limit: 255, default: "Slideshow", null: false
+    t.string   "folder_zip",     limit: 255
+    t.string   "type",           limit: 255, default: "Slideshow", null: false
+    t.string   "broken_message"
   end
 
   add_index "presentations", ["theme_id"], name: "index_presentations_on_theme_id"

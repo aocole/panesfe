@@ -128,12 +128,12 @@ describe "foldershow access control" do
       expect(page).to have_content(user_foldershow.name)
     end
 
-    it "should go back from show foldershow" do
+    it "should preview from show foldershow" do
       log_in_as user
       user_foldershow = FactoryGirl.create(:foldershow, user: user)
       visit_expect(presentation_path(user_foldershow))
       click_link_or_button('Preview')
-      expect(current_path).to eq(preview_presentation_path(user_foldershow))
+      expect(current_path).to eq(preview_presentation_path(user_foldershow, trailing_slash: true))
     end
     
     it "should delete from show foldershow" do
