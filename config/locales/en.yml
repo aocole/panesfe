@@ -50,6 +50,7 @@ en:
       panesd_offline: Could not connect to the video wall controller. The system will not function properly in this state.
       presentation_pushed: Presentation pushed successfully
       quota_available: "%{available} of %{total} available."
+      broken_headsup: "This presentation will not be played again until the following is fixed:"
     auth:
       not_authorized: You are not authorized to perform this action.
       login_required: You must log in to continue.

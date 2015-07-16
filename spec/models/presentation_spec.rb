@@ -95,6 +95,43 @@ RSpec.describe Presentation do
       expect{show.mark_broken!(:no_index_found)}.to raise_error
     end
 
+    it "should not have duplicate broken messages" do
+      show = FactoryGirl.build :slideshow
+      
+      show.mark_broken!('no_index_found')
+      show.mark_broken!('no_index_found')
+      expect(show.broken_message_keys).to eq ['no_index_found']
+    end
+
+    it "should clear broken messages when the presentation is updated" do
+      show = FactoryGirl.build :slideshow
+      show.mark_broken!('no_index_found')
+      expect(show.broken_message_keys).to eq ['no_index_found']
+
+      # Should not change when also updating broken_message_keys
+      show.name = "Maybe changing the name will fix it?"
+      show.broken_message_keys = ['presentation_timeout']
+      expect(show.save).to be_truthy
+      expect(show.broken_message_keys).to eq ['presentation_timeout']
+
+      show.name = "Maybe changing the name again will fix it?"
+      expect(show.save).to be_truthy
+      expect(show.broken_message_keys).to be_blank
+    end
+
+    it "should clear broken messages when a slideshow's slides are changed" do
+      show = FactoryGirl.build :slideshow
+      show.slides = [FactoryGirl.build(:slide, slideshow: show), FactoryGirl.build(:slide, slideshow: show)]
+      show.mark_broken! 'presentation_timeout'
+  
+      slide = Slide.find(show.slides.last.id)
+      expect(slide.destroy).to be_truthy
+      show.reload
+      expect(show.broken_message_keys).to be_blank
+      
+
+    end
+
     it "should have translations for all broken messages" do
       Presentation::BROKEN_MESSAGE_KEYS.each do |translation_key|
         expect{I18n.t!(Presentation.broken_message_to_i18n_key(translation_key), raise: true)}.not_to raise_error, "Should have translation for #{translation_key}"

@@ -24,6 +24,12 @@ describe "Display methods access control" do
   end
 
   context 'when videowall authenticated' do
+    it "should not display broken slideshows when selecting next" do
+      user_slideshow.mark_broken!('no_index_found')
+      expect {visit next_presentations_url(host: 'localhost')}.not_to raise_error
+      expect(current_path).not_to eq display_presentation_path(user_slideshow)
+    end
+
     it "should display a slideshow" do
       visit display_presentation_url(user_slideshow, host: 'localhost')
       expect(current_path).to eq display_presentation_path(user_slideshow)

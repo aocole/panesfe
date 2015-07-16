@@ -5,8 +5,10 @@ class PresentationsController < ApplicationController
   before_action :verify_localhost, only: PANESD_METHODS
   before_action :set_presentation, only: [:show, :push, :edit, :update, :destroy]
 
-  # This is needed to be able to download .js files from foldershows
-  skip_before_action :verify_authenticity_token, only: [:display]
+  skip_before_action :verify_authenticity_token, only: [
+    :display, # This is needed to be able to download .js files from foldershows
+    :mark_broken
+  ]
 
   # GET /presentations
   # GET /presentations.json
@@ -34,8 +36,8 @@ class PresentationsController < ApplicationController
   # TODO: this could be improved to better "randomize" the selection by 
   # taking recently-played information in to account.
   def next
-    offset = rand(Presentation.count)
-    presentation = Presentation.offset(offset).select([:id]).first
+    offset = rand(Presentation.working.count)
+    presentation = Presentation.working.offset(offset).select([:id]).first
     if presentation.nil?
       redirect_to logged_out_home_path
       return

@@ -63,7 +63,7 @@
         </td>
 <!--         <td><%= presentation.published %></td> -->
       <%if @presentations.any?{|p|p.user != current_user}%><td><%= presentation.user.email %></td><%end%>
-        <td class="<%= presentation.broken_messages? ? 'text-danger' : ''%>"><%if presentation.broken_messages?%><%= full_broken_messages(presentation) %><%end%></td>
+        <td class="<%= presentation.broken_messages? ? 'text-danger' : ''%>"><%if presentation.broken_messages?%><strong><%= t 'controllers.presentations.broken_headsup' %></strong> <%= full_broken_messages(presentation) %><%end%></td>
         <td><%=time_tag presentation.updated_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
