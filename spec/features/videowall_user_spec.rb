@@ -55,7 +55,7 @@ describe "Display methods access control" do
     end
 
     it "should mark presentation as broken" do
-      visit mark_broken_presentation_url(user_slideshow, host: 'localhost', message: 'no_index_found')
+      page.driver.post mark_broken_presentation_url(user_slideshow, host: 'localhost', message: 'no_index_found')
       expect(current_path).to eq mark_broken_presentation_path(user_slideshow)
       expect(status_code).to eq 204
       user_slideshow.reload
@@ -77,8 +77,8 @@ describe "Display methods access control" do
 
     it "should not allow regular internet user to mark presentation broken" do
       log_in_as(user)
-      visit(mark_broken_presentation_url(user_slideshow, host: 'notlocalhost.com'))
-      expect(page).to have_content "You need to log in"
+      page.driver.post(mark_broken_presentation_url(user_slideshow, host: 'notlocalhost.com'))
+      expect(status_code).to eq 302
     end
   end
 
