@@ -19,6 +19,7 @@ en:
       edit: Edit
       push: Push
       save: Save
+      help: Help
     titles:
       edit: Edit %{model}
       save: Save %{model}
