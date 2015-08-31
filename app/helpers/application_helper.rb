@@ -29,7 +29,7 @@ module ApplicationHelper
       return false
     end
 
-    Panesd.status =~ /Interactive Mode: On/
+    return (Panesd.status =~ /Interactive Mode: On/) != nil
   end
 
 end
