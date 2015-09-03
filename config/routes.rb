@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   get 'global_settings', to: 'global_settings#edit', as: 'global_settings'
+  get 'screens_on', to: 'global_settings#screens_on', as: 'screens_on'
+  get 'screens_off', to: 'global_settings#screens_off', as: 'screens_off'
   post 'global_settings', to: 'global_settings#update'
 
   devise_for :users, controllers: {

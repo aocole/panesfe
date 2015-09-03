@@ -16,4 +16,25 @@ class GlobalSettingsController < ApplicationController
     redirect_to global_settings_path
   end
 
+  def screens_on
+    screen_state 'on'
+  end
+
+  def screens_off
+    screen_state 'off'
+  end
+
+  private
+
+  def screen_state(state)
+    authorize :global_settings, "screens_#{state}?".intern
+    `displays_#{state}.sh`
+    flash[:notice] = t('controllers.settings.screens_signaled')
+    if request.env['HTTP_REFERER']
+      redirect_to :back
+    else
+      redirect_to logged_in_home_path
+    end
+  end    
+
 end

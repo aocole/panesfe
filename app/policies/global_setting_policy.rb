@@ -8,4 +8,12 @@ class GlobalSettingPolicy < Struct.new(:user, :global_settings)
     edit?
   end
 
+  def screens_on?
+    user.adminish?
+  end
+
+  def screens_off?
+    screens_on?
+  end
+
 end

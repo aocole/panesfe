@@ -87,6 +87,9 @@ en:
       edit:
         title: User Settings
     settings:
+      screens_on: Turn Screens On
+      screens_off: Turn Screens Off
+      screens_signaled: The screens have been signaled. It can take a few moments for them to respond.
       edit:
         title: Global Settings
         hint: These settings affect all users
