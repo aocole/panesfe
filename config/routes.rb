@@ -10,7 +10,11 @@ Rails.application.routes.draw do
 
   presentation_superclass_methods = [:index, :show, :destroy]
 
-  resources :users
+  resources :users do
+    get 'password', on: :member
+    put 'password_update', on: :member
+  end
+
   resources :presentations, only: presentation_superclass_methods do
     get 'display', on: :member
     get 'next', on: :collection

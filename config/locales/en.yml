@@ -86,6 +86,8 @@ en:
       use_custom: "Custom"
       edit:
         title: User Settings
+      change_password: Change Password
+      password_changed: Password changed successfully.
     settings:
       screens_on: Turn Screens On
       screens_off: Turn Screens Off
@@ -106,6 +108,8 @@ en:
         role/admin: Administrator
         role/user: Normal User
         custom_disk_quota_mb: Disk Quota
+        password: New password
+        password_confirmation: New password confirmation
       presentation:
         user_id: Author
         name: Presentation Name

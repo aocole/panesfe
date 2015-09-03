@@ -17,6 +17,14 @@ class UserPolicy < ApplicationPolicy
     show?
   end
 
+  def password?
+    settings? && record.provider == "devise"
+  end
+
+  def password_update?
+    password?
+  end
+
   def update?
     edit? || settings?
   end
@@ -28,13 +36,18 @@ class UserPolicy < ApplicationPolicy
   def permitted_attributes
     return [] unless admin_or_owner?
     
-    permitted = [:encrypted_password, :family_name, :given_name, :primary_presentation_id]
+    permitted = [:family_name, :given_name, :primary_presentation_id]
     if user.adminish?
       permitted += [:custom_disk_quota_mb, :card_number]
       if record != user
         permitted += [:role]
       end
     end
+
+    if record.provider == "devise"
+      permitted += [:password, :password_confirmation]
+    end
+
     return permitted
   end
 

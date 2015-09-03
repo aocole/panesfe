@@ -23,6 +23,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def password_update
+    @user.password = params[:user][:password]
+    @user.password_confirmation = params[:user][:password_confirmation]
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to logged_in_home_path, notice: I18n.t('controllers.users.password_changed') }
+        format.json { render :show, status: :ok, location: @user }
+      else
+        format.html { render :password }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   def user_params

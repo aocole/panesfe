@@ -38,6 +38,15 @@
     <%= error_span(@user[:family_name]) %>
   </div>
 
+  <% if policy(@user).permitted_attributes.include?(:password) %>
+    <div class="form-group">
+      <%= f.label :password, class: 'control-label col-sm-2' %>
+      <div class="col-sm-10">
+        <%= link_to t('controllers.users.change_password'), password_user_path(@user), class: 'btn btn-default' %>
+      </div>
+    </div>
+  <% end %>
+
   <div class="form-group">
     <%= f.label :card_number, class: 'control-label col-sm-2' %>
     <div class="col-sm-10">

@@ -2,6 +2,10 @@ require 'rails_helper'
 describe "User settings" do
   let(:user) { FactoryGirl.create(:user) }
   let(:admin) { FactoryGirl.create(:user, role: User.roles[:admin]) }
+  let(:password_user) { FactoryGirl.create(:user, 
+    provider: "devise", 
+    encrypted_password: "$2a$10$.UHXN1Vof1iINxA9LIXxOOFFDYr5E.xkoOPNDO2zDMG3LNDTgQb.G" # "foo"
+  )}
 
   context "as regular user" do
     before :each do
@@ -31,11 +35,59 @@ describe "User settings" do
       expect(page).to have_field('Family name', with: user.family_name)
       expect(page).to have_select('Primary presentation')
       expect(page).to have_text(user.card_number)
+      expect(page).not_to have_text('New password')
       expect(page).not_to have_field('user[role]')
       expect(page).not_to have_field('user[card_number]')
       expect(page).not_to have_field('user[custom_disk_quota_mb]')
       expect(page).not_to have_text('Role')
       expect(page).not_to have_text('Quota')
+    end
+
+    it "should change password" do
+      log_in_as password_user
+      visit_expect settings_path
+      click_link_or_button 'Change Password'
+      fill_in('New password', with: 'password123')
+      fill_in('New password confirmation', with: 'password123')
+      click_link_or_button 'Save'
+      expect(current_path).to eq '/users/sign_in'
+      expect(password_user.reload.valid_password?('password123')).to be_truthy
+    end
+
+    it "shouldn't change password if empty, too short, or doesn't match" do
+      log_in_as password_user
+
+      # left blank
+      visit_expect password_user_path(password_user)
+      click_link_or_button 'Save'
+      expect(current_path).to eq password_update_user_path(password_user)
+      expect(page).to have_text "can't be blank"
+      expect(password_user.reload.valid_password?("foo")).to be_truthy
+
+      # too short
+      visit_expect password_user_path(password_user)
+      fill_in('New password', with: 'pass')
+      fill_in('New password confirmation', with: 'pass')
+      click_link_or_button 'Save'
+      expect(current_path).to eq password_update_user_path(password_user)
+      expect(page).to have_text "too short"
+      expect(password_user.reload.valid_password?("foo")).to be_truthy
+
+      # left blank
+      visit_expect password_user_path(password_user)
+      fill_in('New password', with: 'something')
+      fill_in('New password confirmation', with: 'different')
+      click_link_or_button 'Save'
+      expect(current_path).to eq password_update_user_path(password_user)
+      expect(page).to have_text "doesn't match"
+      expect(password_user.reload.valid_password?("foo")).to be_truthy
+    end
+
+    it "shouldn't change other user's password" do
+      log_in_as admin
+      visit password_user_path(password_user)
+      expect(current_path).to eq logged_in_home_path
+      expect(page).to have_text "You are not authorized"
     end
   end
 

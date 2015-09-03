@@ -54,6 +54,7 @@ RSpec.configure do |config|
     if Rails.env.test?
       FileUtils.rm_rf(Dir["#{File.join BaseUploader.root.call, User.upload_base}/[^.]*"])
     end
+    Warden.test_reset!
   end
   config.before(:all) do
     GrowingPanes.reload_config
@@ -61,19 +62,24 @@ RSpec.configure do |config|
 end
 
 require 'support/database_cleaner'
+include Warden::Test::Helpers
 
 def log_in_as(user)
   OmniAuth.config.test_mode = true
-  OmniAuth.config.mock_auth[user.provider.intern] = OmniAuth::AuthHash.new({
-    provider: user.provider.to_s,
-    uid: user.uid,
-    info: {
-      given_name: user.given_name,
-      family_name: user.family_name,
-      email: user.email,
-    }
-  })
-  visit user_omniauth_authorize_path(user.provider.intern)
+  if user.provider == "devise"
+    login_as user, scope: :user    
+  else
+    OmniAuth.config.mock_auth[user.provider.intern] = OmniAuth::AuthHash.new({
+      provider: user.provider.to_s,
+      uid: user.uid,
+      info: {
+        given_name: user.given_name,
+        family_name: user.family_name,
+        email: user.email,
+      }
+    })
+    visit user_omniauth_authorize_path(user.provider.intern)
+  end
 end
 
 def not_logged_in
