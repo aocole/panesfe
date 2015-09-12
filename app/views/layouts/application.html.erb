@@ -53,6 +53,9 @@
                 <% if policy(:global_settings).edit? %>
                   <li><%= link_to t('controllers.settings.edit.title'), global_settings_path  %></li>
                 <% end %>
+                <% if policy(:user).create? %>
+                  <li><%= link_to User.model_name.human.pluralize, users_path %></li>
+                <% end %>
               <% end %>
               <li><%= link_to t('helpers.links.help'), "https://github.com/growingpanes/growingpanes/wiki"  %></li>
             </ul>

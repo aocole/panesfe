@@ -41,6 +41,9 @@ class UserPolicy < ApplicationPolicy
       permitted += [:custom_disk_quota_mb, :card_number]
       if record != user
         permitted += [:role]
+        if record.new_record?
+          permitted += [:email]
+        end
       end
     end
 

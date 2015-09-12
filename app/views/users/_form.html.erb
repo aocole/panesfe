@@ -18,7 +18,11 @@
   <div class="form-group">
     <%= f.label :email, class: 'control-label col-sm-2' %>
     <div class="col-sm-10">
-      <p class="form-control-static"><%= @user.email %></p>
+      <% if @user.new_record? %>
+        <%= f.email_field :email, class: 'form-control' %>
+      <% else %>
+        <p class="form-control-static"><%= @user.email %></p>
+      <% end %>
     </div>
   </div>
 
@@ -39,12 +43,29 @@
   </div>
 
   <% if policy(@user).permitted_attributes.include?(:password) %>
-    <div class="form-group">
-      <%= f.label :password, class: 'control-label col-sm-2' %>
-      <div class="col-sm-10">
-        <%= link_to t('controllers.users.change_password'), password_user_path(@user), class: 'btn btn-default' %>
+    <% if @user.new_record? %>
+      <div class="form-group">
+        <%= f.label :password, class: 'control-label col-sm-2' %>
+        <div class="col-sm-10">
+          <%= f.password_field :password, class: 'form-control' %>
+        </div>
+        <%= error_span(@user[:password]) %>
       </div>
-    </div>
+      <div class="form-group">
+        <%= f.label :password_confirmation, class: 'control-label col-sm-2' %>
+        <div class="col-sm-10">
+          <%= f.password_field :password_confirmation, class: 'form-control' %>
+        </div>
+        <%= error_span(@user[:password_confirmation]) %>
+      </div>
+    <% else %>
+      <div class="form-group">
+        <%= f.label :password, class: 'control-label col-sm-2' %>
+        <div class="col-sm-10">
+          <%= link_to t('controllers.users.change_password'), password_user_path(@user), class: 'btn btn-default' %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 
   <div class="form-group">
@@ -118,13 +139,15 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= f.label :primary_presentation_id, class: 'control-label col-sm-2' %>
-    <div class="col-sm-10">
-      <%= f.collection_select :primary_presentation_id, @user.presentations, :id, :name, {}, class: 'form-control' %>
+  <% unless @user.new_record? %>
+    <div class="form-group">
+      <%= f.label :primary_presentation_id, class: 'control-label col-sm-2' %>
+      <div class="col-sm-10">
+        <%= f.collection_select :primary_presentation_id, @user.presentations, :id, :name, {}, class: 'form-control' %>
+      </div>
+      <%= error_span(@user[:primary_presentation]) %>
     </div>
-    <%= error_span(@user[:primary_presentation]) %>
-  </div>
+  <% end %>
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
