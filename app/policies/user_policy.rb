@@ -33,6 +33,10 @@ class UserPolicy < ApplicationPolicy
     edit?
   end
 
+  def import?
+    create?
+  end
+
   def permitted_attributes
     return [] unless admin_or_owner?
     

@@ -6,6 +6,11 @@
             new_user_path,
             :class => 'btn btn-primary' %>
     <% end %>
+    <% if policy(:user).import? %>
+      <%= link_to t('.import', :default => t("helpers.links.import")),
+            import_users_path,
+            :class => 'btn btn-primary' %>
+    <% end %>
   </h1>
 </div>
 <table class="table table-striped">

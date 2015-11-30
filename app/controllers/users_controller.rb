@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, except: [:settings, :index, :new, :create]
+  before_action :set_user, except: [:settings, :index, :new, :create, :import, :new_import]
+  skip_after_filter :verify_authorized, only: [:new_import]
 
   def index
     raise Pundit::NotAuthorizedError unless policy(:user).create?
@@ -27,6 +28,11 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def new_import
+    raise Pundit::NotAuthorizedError unless policy(:user).create?
+    @users = []
   end
 
   def settings

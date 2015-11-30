@@ -41,6 +41,14 @@ describe "admin presentations" do
       expect(current_path).to eq users_path
       expect(page).to have_content "successfully created"
     end
+
+    it "should import" do
+      visit_expect users_path
+      click_link_or_button "Import"
+
+      expect(current_path).to eq import_users_path
+    end
+
   end
 
   context "as regular user" do

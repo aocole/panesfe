@@ -1,0 +1,39 @@
+<%- model_class = User -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => [:'helpers.titles.import', 'Import %{model}'], :model => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<%= form_tag import_users_path, html: { class: "user form-horizontal" } do |f| %>
+
+  <% @users.each do |user| %>
+    <% if user.errors.any? %>
+      <div id="error_expl" class="panel panel-danger">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+          <% user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="form-group">
+    <%= label_tag :import_file, t('controllers.users.users_file'), :class => 'control-label' %>
+    <%= file_field :import_file, :class => 'form-control' %>
+    <div class="help-block">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= submit_tag t('helpers.links.save'), class: 'btn btn-primary' %>
+      <%= link_to t('.cancel', default: t("helpers.links.cancel")),
+            users_path, class: 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>

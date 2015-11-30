@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   resources :users do
     get 'password', on: :member
     put 'password_update', on: :member
+    get 'import', to: 'users#new_import', on: :collection
+    post 'import', to: 'users#import', on: :collection
   end
 
   resources :presentations, only: presentation_superclass_methods do
