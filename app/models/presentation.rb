@@ -3,6 +3,7 @@ class Presentation < ActiveRecord::Base
   BROKEN_MESSAGE_KEYS = %W{
     no_index_found
     presentation_timeout
+    slide_timeout
   }
 
   scope :working, -> { where(broken_message_keys: nil) }
