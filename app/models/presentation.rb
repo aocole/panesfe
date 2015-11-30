@@ -2,7 +2,6 @@ require 'carrierwave/orm/activerecord'
 class Presentation < ActiveRecord::Base
   BROKEN_MESSAGE_KEYS = %W{
     no_index_found
-    slide_timeout
     presentation_timeout
   }
 

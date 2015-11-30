@@ -5,12 +5,6 @@ var GrowingPanes = {
 		console.info('GrowingPanes done')
 	},
 
-	keepAlive: function() {
-		// This is just done so we get an event
-		// in panesd. The message doesn't matter, we key off the function name.
-		console.info('GrowingPanes keepAlive')
-	},
-
 	start: function() {
 		this._getJSON();
 	},

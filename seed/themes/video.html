@@ -66,15 +66,6 @@
       });
 
       var real_video = video[0]
-      // We need to periodically tell the back end that we're still
-      // alive and doing stuff so that this presentation doesn't get killed
-      function keepPlaying() {
-        if(!real_video.paused){
-          GrowingPanes.keepAlive();
-        }
-        window.setTimeout(keepPlaying, 8000)
-      }
-      keepPlaying();
 
       // Following section adds support for the presentation-mode "clicker" buttons
       $(document).on('slideNext', function(){

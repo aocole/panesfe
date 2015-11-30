@@ -6,6 +6,5 @@
 	"upload_url_prefix" : "",
 
 	"panesfe_endpoint" : "http://localhost",
-	"slide_timeout" : 30,
 	"presentation_timeout" : 120
 }
