@@ -41,6 +41,15 @@ describe "admin presentations" do
       expect(current_path).to eq users_path
       expect(page).to have_content "successfully created"
     end
+
+    it "should delete user" do
+      other_user = FactoryGirl.create(:user, last_sign_in_at: nil)
+      visit_expect users_path
+      expect(page).to have_content other_user.email
+      click_link_or_button 'Delete'
+      expect(current_path).to eq users_path
+      expect(page).to have_content "destroyed"
+    end
   end
 
   context "as regular user" do

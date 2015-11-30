@@ -11,6 +11,16 @@ class UsersController < ApplicationController
     authorize @user
   end
 
+  def destroy
+    if @user.destroy
+      flash.notice = "User #{@user.email.inspect} was destroyed"
+    else
+      flash.error = "An error occurred #{@user.errors.full_messages.inspect}"
+    end
+    redirect_to :users
+  end
+
+
   def create
     @user = User.new
     authorize @user

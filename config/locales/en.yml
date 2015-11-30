@@ -110,6 +110,7 @@ en:
         custom_disk_quota_mb: Disk Quota
         password: New password
         password_confirmation: New password confirmation
+        provider: Login method
       presentation:
         user_id: Author
         name: Presentation Name
