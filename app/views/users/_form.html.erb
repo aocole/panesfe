@@ -31,7 +31,7 @@
     <div class="col-sm-10">
       <%= f.text_field :given_name, class: 'form-control' %>
     </div>
-    <%= error_span(@user[:given_name]) %>
+    <%= f.error_span(:given_name) %>
   </div>
 
   <div class="form-group">
@@ -39,7 +39,7 @@
     <div class="col-sm-10">
       <%= f.text_field :family_name, class: 'form-control' %>
     </div>
-    <%= error_span(@user[:family_name]) %>
+    <%= f.error_span(:family_name) %>
   </div>
 
   <% if policy(@user).permitted_attributes.include?(:role) %>
@@ -55,7 +55,7 @@
           </div>
         <% end %>
       </div>
-      <%= error_span(@user[:provider]) %>
+      <%= f.error_span(:provider) %>
     </div>
   <% end %>
 
@@ -66,14 +66,14 @@
         <div class="col-sm-10">
           <%= f.password_field :password, class: 'form-control' %>
         </div>
-        <%= error_span(@user[:password]) %>
+        <%= f.error_span(:password) %>
       </div>
       <div class="form-group">
         <%= f.label :password_confirmation, class: 'control-label col-sm-2' %>
         <div class="col-sm-10">
           <%= f.password_field :password_confirmation, class: 'form-control' %>
         </div>
-        <%= error_span(@user[:password_confirmation]) %>
+        <%= f.error_span(:password_confirmation) %>
       </div>
     <% else %>
       <div class="form-group">
@@ -94,7 +94,7 @@
         <p class="form-control-static"><%= @user.card_number %></p>
       <% end %>
     </div>
-    <%= error_span(@user[:card_number]) %>
+    <%= f.error_span(:card_number) %>
   </div>
 
   <% if policy(@user).permitted_attributes.include?(:role) %>
@@ -110,7 +110,7 @@
           </div>
         <% end %>
       </div>
-      <%= error_span(@user[:role]) %>
+      <%= f.error_span(:role) %>
     </div>
   <% end %>
 
@@ -152,7 +152,7 @@
         </div>
 
       </div>
-      <%= error_span(@user[:custom_disk_quota_mb]) %>
+      <%= f.error_span(:custom_disk_quota_mb) %>
     </div>
   <% end %>
 
@@ -162,7 +162,7 @@
       <div class="col-sm-10">
         <%= f.collection_select :primary_presentation_id, @user.presentations, :id, :name, {}, class: 'form-control' %>
       </div>
-      <%= error_span(@user[:primary_presentation]) %>
+      <%= f.error_span(:primary_presentation) %>
     </div>
   <% end %>
 

@@ -39,14 +39,14 @@ gem 'unicorn', group: :production
 gem 'inifile', '~>3.0.0'
 
 # authn/authz stuff
-gem 'devise'
-gem 'omniauth'
-gem 'omniauth-google-oauth2'
-gem 'pundit'
+gem 'devise', '~>3.4'
+gem 'omniauth', '~>1.2'
+gem 'omniauth-google-oauth2', '~>0.2'
+gem 'pundit', '1.0.0'
 
 gem "therubyracer"
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
-gem "twitter-bootstrap-rails"
+gem "twitter-bootstrap-rails", '~>3.2.2'
 
 gem 'rubyzip', require: 'zip' # for unzipping foldershows
 

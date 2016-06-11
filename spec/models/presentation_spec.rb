@@ -92,7 +92,7 @@ RSpec.describe Presentation do
       expect(show.broken_message_keys).to eq %W{no_index_found}
       
       # should not be able to use symbol
-      expect{show.mark_broken!(:no_index_found)}.to raise_error
+      expect{show.mark_broken!(:no_index_found)}.to raise_error(/not a valid broken message/)
     end
 
     it "should not have duplicate broken messages" do

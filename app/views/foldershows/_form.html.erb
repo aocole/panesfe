@@ -42,7 +42,7 @@
         <%= f.check_box :published %>
         <%= Presentation.human_attribute_name(:published) %>
       <%end%>
-      <%= error_span(@foldershow[:published]) %>
+      <%= f.error_span(:published) %>
     </div>
   </div>
 

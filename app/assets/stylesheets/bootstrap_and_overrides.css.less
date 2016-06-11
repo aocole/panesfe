@@ -1,5 +1,11 @@
 @import "twitter/bootstrap/bootstrap";
 
+// Set correct font paths
+@glyphiconsEotPath: font-url("glyphicons-halflings-regular.eot");
+@glyphiconsEotPath_iefix: font-url("glyphicons-halflings-regular.eot?#iefix");
+@glyphiconsWoffPath: font-url("glyphicons-halflings-regular.woff");
+@glyphiconsTtfPath: font-url("glyphicons-halflings-regular.ttf");
+@glyphiconsSvgPath: font-url("glyphicons-halflings-regular.svg#glyphicons_halflingsregular");
 
 // // Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
 // @fontAwesomeEotPath: font-url("fontawesome-webfont.eot");
@@ -13,11 +19,7 @@
 
 // Glyphicons
 @import "twitter/bootstrap/glyphicons.less";
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  src: asset-url('glyphicons-halflings-regular.eot');
-  src: asset-url('glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), asset-url('glyphicons-halflings-regular.woff') format('woff'), asset-url('glyphicons-halflings-regular.ttf') format('truetype'), asset-url('glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
-}
+
 // Your custom LESS stylesheets goes here
 //
 // Since bootstrap was imported above you have access to its mixins which

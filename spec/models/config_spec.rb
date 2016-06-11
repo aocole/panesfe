@@ -19,8 +19,6 @@ describe GrowingPanes do
     i = ImageUploader.new(slide)
     expect(i.store_dir).to eq "test/user_#{slide.user.id}/#{slide.id}"
     expect(i.root).to eq '/whackyvalue'
-
-    expect{ImageUploader.store_dir}.to raise_error
   end
 
 end

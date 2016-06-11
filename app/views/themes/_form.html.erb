@@ -18,19 +18,19 @@
   <div class="form-group">
     <%= f.label :name %>
     <%= f.text_field :name, :class => 'form-control' %>
-    <%= error_span(@theme[:name]) %>
+    <%= f.error_span(:name) %>
   </div>
 
   <div class="form-group">
     <%= f.label :description %>
     <%= f.text_field :description, :class => 'form-control' %>
-    <%= error_span(@theme[:description]) %>
+    <%= f.error_span(:description) %>
   </div>
 
   <div class="form-group">
     <%= f.label :content %>
     <%= f.text_area :content, :class => 'form-control', rows: 15 %>
-    <%= error_span(@theme[:content]) %>
+    <%= f.error_span(:content) %>
   </div>
 
 
