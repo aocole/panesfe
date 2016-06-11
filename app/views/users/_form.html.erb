@@ -42,6 +42,23 @@
     <%= error_span(@user[:family_name]) %>
   </div>
 
+  <% if policy(@user).permitted_attributes.include?(:role) %>
+    <div class="form-group">
+      <%= label_tag User.human_attribute_name(:provider), nil, class: 'control-label col-sm-2' %>
+      <div class="col-sm-10">
+        <% [%w{google_oauth2 Google},%w{devise Username/Password}].each do |value, display_name| %>
+          <div class="radio">
+            <%= content_tag :label do
+              [f.radio_button(:provider, value), display_name].join.html_safe
+            end
+            %>
+          </div>
+        <% end %>
+      </div>
+      <%= error_span(@user[:provider]) %>
+    </div>
+  <% end %>
+
   <% if policy(@user).permitted_attributes.include?(:password) %>
     <% if @user.new_record? %>
       <div class="form-group">

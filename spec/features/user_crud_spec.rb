@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "admin presentations" do
   context "as admin user" do
     let(:admin) { FactoryGirl.create(:user, role: User.roles[:admin]) }
-
+    
     before :each do
       log_in_as admin
     end
@@ -20,7 +20,7 @@ describe "admin presentations" do
       expect(page).to have_content "never"
     end
 
-    it "should create new user" do
+    it "should create new password user" do
       visit_expect users_path
       click_link_or_button "New"
 
@@ -35,6 +35,21 @@ describe "admin presentations" do
       fill_in "Email", with: "alice@example.com"
       fill_in "New password", with: 'xyzzyzzy'
       fill_in "New password confirmation", with: 'xyzzyzzy'
+
+      click_link_or_button("Save")
+
+      expect(current_path).to eq users_path
+      expect(page).to have_content "successfully created"
+    end
+
+    it "should create new devise user" do
+      visit_expect users_path
+      click_link_or_button "New"
+
+      expect(current_path).to eq new_user_path
+
+      fill_in "Email", with: "alice@example.com"
+      choose "Google"
 
       click_link_or_button("Save")
 

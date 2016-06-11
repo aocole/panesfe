@@ -42,12 +42,12 @@ class UserPolicy < ApplicationPolicy
       if record != user
         permitted += [:role]
         if record.new_record?
-          permitted += [:email]
+          permitted += [:email, :provider]
         end
       end
     end
 
-    if record.provider == "devise"
+    if record.provider == "devise" || record.new_record?
       permitted += [:password, :password_confirmation]
     end
 
