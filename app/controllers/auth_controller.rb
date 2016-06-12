@@ -2,6 +2,10 @@ class AuthController < Devise::OmniauthCallbacksController
   skip_after_filter :verify_authorized, only: [:google_oauth2]
 
   def google_oauth2
+    email = auth_hash["info"]["email"] rescue "[unavailable]"
+    if ! email =~ /seattlecentral.edu$/
+      redirect_to root_url, error: "Your email #{email} is not authorized to create an account."
+    end
     @user = User.find_or_create_with_omniauth(auth_hash)
     sign_in_and_redirect @user, event: :authentication
   end
