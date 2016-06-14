@@ -10,7 +10,7 @@ module CarrierWave
 
     def video_thumb(width, height)
       FFMPEG.logger = Rails.logger
-      FFMPEG.ffmpeg_binary = 'avconv'
+      FFMPEG.ffmpeg_binary = '/usr/bin/avconv'
       Tempfile.create(['video_thumbnailer_', '.png']) do |tempfile|
         file = ::FFMPEG::Movie.new(current_path)
         # file.transcode(current_path, "-ss 00:00:05 -an -r 1 -vframes 1 -s #{width}x#{height}")
