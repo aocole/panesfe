@@ -24,7 +24,7 @@ class ImageUploader < BaseUploader
 
   version :thumb do
     process resize_and_pad: [150, 150], if: :is_image? 
-    process video_thumb: [150, 150], if: :is_video?# do
+    # process video_thumb: [150, 150], if: :is_video?# do
     #   binding.pry
     #   process convert: 'png'
     # end
